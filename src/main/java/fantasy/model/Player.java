@@ -1,0 +1,360 @@
+package fantasy.model;
+
+import java.util.ArrayList;
+import java.util.Map.Entry;
+
+import fantasy.Log;
+import fantasy.builder.TeamBuilder;
+import fantasy.controller.BaseController;
+import fantasy.enums.Position;
+
+
+public class Player {
+
+	String rank;				//0
+	String playerName;	//1
+	String teamName;	//2
+	String pos;				//3
+	String bye;				//4
+	String best;				//5
+	String worst;			//6
+	String avg;				//7
+	String std_dev;		//8
+	String adp;				//9
+	String versus;			//10
+	String pos_rank;
+	boolean available;
+	int id;
+	String handcuffs;
+	Position position;
+	String notes;
+	int roundDrafted;
+	private String tags;
+	ArrayList<Player> backups;
+	int tier;
+	private String nickNotes;
+	
+	
+	public Player(String[] stats) {
+		super();
+		this.rank = stats[0];
+		this.teamName = extractTeamName(stats);
+		setPosAndPosRank(stats[3]);
+		this.playerName = getRealName(stats);
+		this.bye = stats[4];
+		this.best = stats[5];
+		this.worst = stats[6];
+		this.avg = stats[7];
+		this.std_dev = stats[8];
+		this.adp = getCorrectAdp(stats[9]);
+		this.id = Integer.parseInt(this.rank);
+		this.versus = stats[10];
+		this.available = true;
+		this.tags = "";
+		this.backups = new ArrayList<Player>();
+		this.tier = setTier();
+	}
+	
+	private String extractTeamName(String[] stats) {
+		if (stats[2].isEmpty() || stats[2].equals("NA")) {
+			String[] split = stats[1].split(" ");
+			stats[2] = split[split.length - 1];
+			//Log.deb("name= " + stats[2]);
+		}
+		return stats[2];
+	}
+
+	private int setTier() {
+		for (int i = 1; i <= 13; i++) {
+			int index = Integer.parseInt(BaseController.getProperties().getProperty("tier" + i));
+			if (Integer.parseInt(rank) < index) {
+				return i;
+			}
+		}
+		return 14;
+	}
+
+	private String getRealName(String[] stats) {
+		return (stats[3].contains("D")) ? stats[2] : stats[1];
+	}
+	
+	public int getTier() {
+		return tier;
+	}
+
+	public Player() {
+		super();
+		setEmptyFields();
+	}
+
+	private void setEmptyFields() {
+		this.rank = "";
+		this.teamName = "";
+		this.pos = "";
+		this.pos_rank = "";
+		this.playerName = ""; 
+		this.bye = "";
+		this.best = "";
+		this.worst = "";
+		this.avg = "";
+		this.std_dev = ""; 
+		this.adp = "";
+		this.versus = "";
+		this.tags = "";
+	}
+
+	private String getCorrectAdp(String s) {
+		if (s.contains(".0")) {
+			s = s.replace(".0", "");
+		}
+		return (s.equals("NA")) ? this.rank : s;
+	}
+
+	public String checkForHandcuff() {
+		return (handcuffs == null) ? " - " : handcuffs;
+	}
+	
+	public String getShort() {
+		return "(" + id + ") " + getNameAndTags(); 
+	}
+	
+	public String getNameAndId() {
+		return "(" + id + ") " + getPlayerName(); 
+	}
+	
+	public void addAdditionalNotes(String addition) {
+		this.notes = this.notes + "   [" + addition + "]";
+	}
+	
+	public void addNicksNotes(String notes) {
+		if (this.nickNotes == null) {
+			this.nickNotes = notes;
+		} else if (!this.getNickNotes().contains(notes)) {
+			this.nickNotes = this.nickNotes + " :: " + notes;
+		}
+	}
+	
+	public String getNickNotes() {
+		return nickNotes;
+	}
+
+	private void setPosAndPosRank(String position) {
+		int ind = -1;
+		for (int i = 0; i < position.length(); i++){
+			if (Character.isDigit(position.charAt(i))){
+				ind = i;
+				break;
+			}
+		}
+		setPos_rank(position.substring(ind));
+		setPos(position.substring(0, ind));
+		setPosition();
+	}
+
+	private void setPosition() {
+		for (Position p : Position.values()) {
+			if (pos.equals(p.getAbbrev())) {
+				position = p;
+			}
+		}
+	}
+
+	public String getHandcuffs() {
+		return handcuffs;
+	}
+
+	public void setHandcuffs(String handcuffs) {
+		this.handcuffs = handcuffs;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	@Override
+	public String toString() {
+		return playerName;
+	}
+	
+	public String getHandcuff() {
+		return handcuffs;
+	}
+
+	public void addHandcuff(Player cuff) {
+		backups.add(cuff);
+		if (handcuffs != null) {
+			if (handcuffs.length() < 150) {
+				handcuffs = handcuffs + ", " + cuff.getShort();
+			}
+		} else {
+			handcuffs = cuff.getShort();
+		}
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public int getRoundDrafted() {
+		return roundDrafted;
+	}
+
+	public void setRoundDrafted(int roundDrafted) {
+		this.roundDrafted = roundDrafted;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String stats(){
+		return playerName + "   (" + pos_rank + "/" + rank + ") [" + pos + ", " + teamName + ", bye:" + bye + "]";
+	}
+	
+	public String getNameAndTags() {
+		return (tags == null || tags.isEmpty()) ? playerName : playerName + " [" + tags + "]";
+	}
+	
+	public String fullStats(){
+		return String.format("|%3d | %-24s| %-3s | %3s/%-3s | %-4s | %-3s |%s", id, getNameAndTags(), pos, pos_rank, rank, teamName, bye, checkForHandcuff());
+	}
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public String getPos_rank() {
+		return pos_rank;
+	}
+
+	public void setPos_rank(String pos_rank) {
+		this.pos_rank = pos_rank;
+	}
+
+	public String getRank() {
+		return rank;
+	}
+
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public void setPlayerName(String player) {
+		this.playerName = player;
+	}
+
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String team) {
+		this.teamName = team;
+	}
+
+	public String getPos() {
+		return pos;
+	}
+
+	public void setPos(String pos) {
+		this.pos = pos;
+	}
+
+	public String getBye() {
+		return bye;
+	}
+
+	public void setBye(String bye) {
+		this.bye = bye;
+	}
+
+	public String getBest() {
+		return best;
+	}
+
+	public void setBest(String best) {
+		this.best = best;
+	}
+
+	public String getWorst() {
+		return worst;
+	}
+
+	public void setWorst(String worst) {
+		this.worst = worst;
+	}
+
+	public String getAvg() {
+		return avg;
+	}
+
+	public void setAvg(String avg) {
+		this.avg = avg;
+	}
+
+	public String getStd_dev() {
+		return std_dev;
+	}
+
+	public void setStd_dev(String std_dev) {
+		this.std_dev = std_dev;
+	}
+
+	public String getAdp() {
+		return adp;
+	}
+
+	public void setAdp(String adp) {
+		this.adp = adp;
+	}
+
+	public String getVersus() {
+		return versus;
+	}
+
+	public void setVersus(String versus) {
+		this.versus = versus;
+	}
+	
+	public void markUnavailable(){
+		this.available = false;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public ArrayList<Player> getBackups() {
+		return backups;
+	}
+
+	public void setBackups(ArrayList<Player> backups) {
+		this.backups = backups;
+	}
+	
+	
+
+}
