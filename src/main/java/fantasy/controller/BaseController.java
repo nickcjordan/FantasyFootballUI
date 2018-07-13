@@ -71,7 +71,11 @@ public class BaseController {
 	}
     
 	public static int get(String property) {
-		return Integer.parseInt(properties.getProperty(property));
+		try {
+			return Integer.parseInt(properties.getProperty(property));
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	public int getPickNumber() {

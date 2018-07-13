@@ -7,21 +7,21 @@ import fantasy.Log;
 import fantasy.builder.TeamBuilder;
 import fantasy.controller.BaseController;
 import fantasy.enums.Position;
-
+import static fantasy.enums.CSVFieldMapping.*;
 
 public class Player {
 
-	String rank;				//0
-	String playerName;	//1
-	String teamName;	//2
-	String pos;				//3
-	String bye;				//4
-	String best;				//5
-	String worst;			//6
-	String avg;				//7
-	String std_dev;		//8
-	String adp;				//9
-	String versus;			//10
+	String rank;				
+	String playerName;	
+	String teamName;	
+	String pos;				
+	String bye;				
+	String best;				
+	String worst;			
+	String avg;				
+	String std_dev;		
+	String adp;				
+	String versus;			
 	String pos_rank;
 	boolean available;
 	int id;
@@ -37,18 +37,18 @@ public class Player {
 	
 	public Player(String[] stats) {
 		super();
-		this.rank = stats[0];
+		this.rank = stats[RANK.getIndex()];
 		this.teamName = extractTeamName(stats);
-		setPosAndPosRank(stats[3]);
+		setPosAndPosRank(stats[POS.getIndex()]);
 		this.playerName = getRealName(stats);
-		this.bye = stats[4];
-		this.best = stats[5];
-		this.worst = stats[6];
-		this.avg = stats[7];
-		this.std_dev = stats[8];
-		this.adp = getCorrectAdp(stats[9]);
+		this.bye = stats[BYE.getIndex()];
+		this.best = stats[BEST.getIndex()];
+		this.worst = stats[WORST.getIndex()];
+		this.avg = stats[AVG.getIndex()];
+		this.std_dev = stats[STD_DEV.getIndex()];
+		this.adp = getCorrectAdp(stats[ADP.getIndex()]);
 		this.id = Integer.parseInt(this.rank);
-		this.versus = stats[10];
+		this.versus = stats[VERSUS_ADP.getIndex()];
 		this.available = true;
 		this.tags = "";
 		this.backups = new ArrayList<Player>();
@@ -56,12 +56,11 @@ public class Player {
 	}
 	
 	private String extractTeamName(String[] stats) {
-		if (stats[2].isEmpty() || stats[2].equals("NA")) {
-			String[] split = stats[1].split(" ");
-			stats[2] = split[split.length - 1];
-			//Log.deb("name= " + stats[2]);
+		if (stats[TEAM_NAME.getIndex()].isEmpty() || stats[TEAM_NAME.getIndex()].equals("NA")) {
+			String[] split = stats[PLAYER_NAME.getIndex()].split(" ");
+			stats[TEAM_NAME.getIndex()] = split[split.length - 1];
 		}
-		return stats[2];
+		return stats[TEAM_NAME.getIndex()];
 	}
 
 	private int setTier() {
@@ -75,7 +74,7 @@ public class Player {
 	}
 
 	private String getRealName(String[] stats) {
-		return (stats[3].contains("D")) ? stats[2] : stats[1];
+		return (stats[POS.getIndex()].contains("D")) ? stats[TEAM_NAME.getIndex()] : stats[PLAYER_NAME.getIndex()];
 	}
 	
 	public int getTier() {

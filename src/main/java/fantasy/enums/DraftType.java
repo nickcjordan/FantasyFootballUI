@@ -29,35 +29,35 @@ public enum DraftType {
 
 	private String[] getMock() {
 		return new String[]{
-				"Mason",
-				"Scott",
-				"Nick J",
-				"Austin",
-				"Nick W",
+				"Chris T",
 				"Chris R",
 				"Will",
-				"Dan",
 				"Matt",
+				"Nick J",
+				"Ryan",
 				"Josh",
-				"Chris T",
-				"Ryan"
+				"Mason",
+				"Nick W",
+				"Austin",
+				"Dan",
+				"Scott"
 		};
 	}
 		
 	private String[] getAuto() {
 		return new String[]{
-				"Mason",
-				"Scott",
-				"Nick J",
-				"Austin",
-				"Nick W",
+				"Chris T",
 				"Chris R",
 				"Will",
-				"Dan",
 				"Matt",
+				"Nick J",
+				"Ryan",
 				"Josh",
-				"Chris T",
-				"Ryan"
+				"Mason",
+				"Nick W",
+				"Austin",
+				"Dan",
+				"Scott"
 		};
 	}
 	

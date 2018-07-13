@@ -1,5 +1,7 @@
 package fantasy.builder;
 
+import org.springframework.util.StringUtils;
+
 import fantasy.Log;
 import fantasy.exception.FalifaException;
 import fantasy.model.NFL;
@@ -8,8 +10,13 @@ import fantasy.model.Player;
 public class PlayerBuilder {
 	
 	public static Player buildPlayer(String line) {
-		Player player =  new Player(parseLineForPlayerStats(line));
-		//Log.deb("PlayerBuilder.buildPlayer() :: PLAYER BUILT=[" + String.format("(%d) %s - %s", player.getId(), player.getPlayerName(), player.getTeamName()) + "]");
+		Player player =  null;
+		try {
+			player =  new Player(parseLineForPlayerStats(line));
+			Log.deb("PlayerBuilder.buildPlayer() :: PLAYER BUILT=[" + String.format("(%d) %s - %s", player.getId(), player.getPlayerName(), player.getTeamName()) + "]");
+		} catch (Exception e) {
+			Log.err("ERROR parsing line:\n" + line + "\n" + e.getMessage());
+		}
 		return player;
 	}
 	
@@ -17,10 +24,9 @@ public class PlayerBuilder {
 		String[] cols = line.split(",");
 		String[] edited = new String[cols.length];
 		for (int i = 0; i < cols.length; i++){
-			edited[i] = (cols[i].replaceAll("\"", "").isEmpty()) ? "NA" : cols[i].replaceAll("\"", "");
-			//edited[i] = cols[i].replaceAll("\"", "");
+			String editedField = cols[i].replaceAll("\"", "");
+			edited[i] = (StringUtils.isEmpty(editedField)) ? "NA" : editedField;
 		}
-		//for(String x : edited) { Log.deb(x); }
 		return edited;
 	}
 	

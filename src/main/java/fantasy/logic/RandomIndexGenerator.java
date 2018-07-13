@@ -15,6 +15,11 @@ public class RandomIndexGenerator {
 	}
 
 	public static int generate() {
+		
+		if (BaseController.pickNumber < Integer.valueOf(BaseController.getProperties().getProperty("pickNumberToStartAIVariability"))) {
+			return 0; // first X picks are set to standard ADP
+		}
+		
 		int x = (int) Math.round(Math.random()*99);
 		
 		int changed = x;

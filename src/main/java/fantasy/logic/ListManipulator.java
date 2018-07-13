@@ -92,8 +92,12 @@ public class ListManipulator {
 	}
 
 	void removeTooEarlyPositions(Player player) {
-		if (tooEarlyForPosition(player.getPosition())) {
-			suggestions.remove(player);
+		try {
+			if (tooEarlyForPosition(player.getPosition())) {
+				suggestions.remove(player);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -102,7 +106,11 @@ public class ListManipulator {
 	}
 	
 	private int prop(Position pos, String prop) {
-		return DraftController.get(pos.getAbbrev().toLowerCase() + prop);
+		try {
+			return DraftController.get(pos.getAbbrev().toLowerCase() + prop);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	private int prop(String prop) {

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.springframework.util.StringUtils;
+
 import fantasy.Log;
 import fantasy.enums.Position;
 import fantasy.model.NFLTeam;
@@ -41,13 +43,14 @@ public class NFLBuilder {
 		String line = "";
 		while(scanner.hasNextLine()){
 			line = scanner.nextLine();
-			buildAndAddPlayer(line);
+			if ((!StringUtils.isEmpty(line)) && (!line.equals("\"\"")) && (!line.contains("TOL"))){ // TOL is for offensive line?
+				buildAndAddPlayer(line);
+			}
 		}
 		scanner.close();
 	}
 	
 	private void buildAndAddPlayer(String line) {
-		if (line.isEmpty()) return;
 		Player player = PlayerBuilder.buildPlayer(line);
 		players.put(player.getPlayerName(), player);
 		TeamBuilder.addPlayerToTeam(player, teams.get(player.getTeamName()));
