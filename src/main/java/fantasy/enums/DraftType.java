@@ -63,16 +63,29 @@ public enum DraftType {
 	
 	private String[] realOrder() {
 		return new String[]{
-				"Brittany",
-				"Diane",
-				"Mom",
-				"Heather",
-				"Dianes Dad",
-				"Dad",
-				"Nick J", 
-				"Michael",
-				"Chris",
-				"Claire"
+//				"Brittany",
+//				"Diane",
+//				"Mom",
+//				"Heather",
+//				"Dianes Dad",
+//				"Dad",
+//				"Nick J", 
+//				"Michael",
+//				"Chris",
+//				"Claire"
+				
+				"Chris T",
+				"Chris R",
+				"Will",
+				"Matt",
+				"Nick J",
+				"Ryan",
+				"Josh",
+				"Mason",
+				"Nick W",
+				"Austin",
+				"Dan",
+				"Scott"
 		};
 
 //	private String[] realOrder() {

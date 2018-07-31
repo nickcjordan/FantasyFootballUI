@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import fantasy.comparator.DraftRankComparator;
+import fantasy.comparator.PlayerDraftedOrderComparator;
 import fantasy.enums.Position;
 
 public class Team {
@@ -198,7 +198,7 @@ public class Team {
 		allPlayers.addAll(te);
 		allPlayers.addAll(k);
 		allPlayers.addAll(d);
-		Collections.sort(allPlayers, new DraftRankComparator());
+		Collections.sort(allPlayers, new PlayerDraftedOrderComparator());
 		return allPlayers;
 	}
 

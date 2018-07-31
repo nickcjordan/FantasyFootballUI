@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div class="section">
+<div class="fill-body-wrapper">
 	<div class="center"><h3><strong>${positionName}:</strong></h3></div>
 		<table class="table table-sm table-striped header-fixed positions">
 					<thead class="thead-inverse">
@@ -21,30 +21,22 @@
 		<tbody>
 			<c:forEach items="${playerList}" var="player">
 				<tr>
-					<td class="id-posList">${player.id}</td>
+					<td class="id-posList">
+						<a href="/pickPlayer?playerId=${player.id}">
+				        	<span class="badge-adp-players">${player.adp}</span>
+			      		</a>
+					</td>
 					<td class="name-posList"><a class="nameLink" data-toggle="modal" data-target="#${player.id}playerModal"><strong>${player.getNameAndTags()}</strong></a></td>
-					
-					<c:choose>
-						<c:when test="${player.pos.equals('QB')}">
-							<td class="pos-posList"><span class="badge badge-warning">${player.pos} - ${player.pos_rank}</span></td>
-						</c:when>
-						<c:when test="${player.pos.equals('RB')}">
-							<td class="pos-posList"><span class="badge badge-info">${player.pos} - ${player.pos_rank}</span></td>
-						</c:when>
-						<c:when test="${player.pos.equals('WR')}">
-							<td class="pos-posList"><span class="badge badge-success">${player.pos} - ${player.pos_rank}</span></td>
-						</c:when>
-						<c:when test="${player.pos.equals('TE')}">
-							<td class="pos-posList"><span class="badge badge-error">${player.pos} - ${player.pos_rank}</span></td>
-						</c:when>
-						<c:when test="${player.pos.equals('K')}">
-							<td class="pos-posList"><span class="badge">${player.pos} - ${player.pos_rank}</span></td>
-						</c:when>
-						<c:otherwise>
-							<td class="pos-posList"><span class="badge badge-inverse">${player.pos} - ${player.pos_rank}</span></td>
-						</c:otherwise>
-					</c:choose>
-					
+					<td class="pos-posList">
+						<c:choose>
+							<c:when test="${player.pos.equals('QB')}"><span class="badge badge-warning">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:when test="${player.pos.equals('RB')}"><span class="badge badge-info">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:when test="${player.pos.equals('WR')}"><span class="badge badge-success">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:when test="${player.pos.equals('TE')}"><span class="badge badge-error">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:when test="${player.pos.equals('K')}"><span class="badge">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:otherwise><span class="badge badge-inverse">${player.pos} ${player.pos_rank}</span></c:otherwise>
+						</c:choose>
+					</td>
 					<td class="id-posList">${player.adp}</td>
 					<td class="id-posList">${player.teamName}</td>
 					<td class="id-posList">${player.bye}</td>

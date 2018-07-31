@@ -92,15 +92,17 @@ public class NFLBuilder {
 	}
 
 	public void addTagsToPlayers() {
+		String line = null;
 		try {
 		Scanner tags = new Scanner(new File("resources/tags.csv"));
 		tags.nextLine(); // move past header
 		while(tags.hasNextLine()){
-			PlayerBuilder.addTag(tags.nextLine());
+			line = tags.nextLine();
+			PlayerBuilder.addTag(line);
 		}
 		tags.close();
 		} catch (Exception e) {
-			Log.err("Could not set tags : " + e.getMessage());
+			Log.err("Could not set tags : " + line);
 		}
 	}
 

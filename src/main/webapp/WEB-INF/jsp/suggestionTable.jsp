@@ -21,7 +21,7 @@
 			</tr>
 		</thead>
 		
-		<tbody>
+		<tbody class="scaled-body">
 			<c:forEach items="${suggestions}" var="player">
 			
 				
@@ -32,27 +32,16 @@
 			      		</a>
 					</td>
 					<td class="name-suggest"><a class="nameLink" data-toggle="modal" data-target="#${player.id}playerModal"><strong>${player.getNameAndTags()}</strong></a></td>
-					
-					<c:choose>
-						<c:when test="${player.pos.equals('QB')}">
-							<td class="pos-suggest"><span class="badge badge-warning">${player.pos} ${player.pos_rank}</span></td>
-						</c:when>
-						<c:when test="${player.pos.equals('RB')}">
-							<td class="pos-suggest"><span class="badge badge-info">${player.pos} ${player.pos_rank}</span></td>
-						</c:when>
-						<c:when test="${player.pos.equals('WR')}">
-							<td class="pos-suggest"><span class="badge badge-success">${player.pos} ${player.pos_rank}</span></td>
-						</c:when>
-						<c:when test="${player.pos.equals('TE')}">
-							<td class="pos-suggest"><span class="badge badge-error">${player.pos} ${player.pos_rank}</span></td>
-						</c:when>
-						<c:when test="${player.pos.equals('K')}">
-							<td class="pos-suggest"><span class="badge">${player.pos} ${player.pos_rank}</span></td>
-						</c:when>
-						<c:otherwise>
-							<td class="pos-suggest"><span class="badge badge-inverse">${player.pos} ${player.pos_rank}</span></td>
-						</c:otherwise>
-					</c:choose>
+					<td class="pos-suggest">
+						<c:choose>
+							<c:when test="${player.pos.equals('QB')}"><span class="badge badge-warning">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:when test="${player.pos.equals('RB')}"><span class="badge badge-info">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:when test="${player.pos.equals('WR')}"><span class="badge badge-success">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:when test="${player.pos.equals('TE')}"><span class="badge badge-error">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:when test="${player.pos.equals('K')}"><span class="badge">${player.pos} ${player.pos_rank}</span></c:when>
+							<c:otherwise><span class="badge badge-inverse">${player.pos} ${player.pos_rank}</span></c:otherwise>
+						</c:choose>
+					</td>
 					
 					<td class="pos_rank-suggest"><span class="badge-adp">${player.rank}</span></td>
 					

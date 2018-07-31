@@ -1,0 +1,3 @@
+* add ADP and ECR tab to draft view
+* add instant draft button to other views
+* fix dash in POS badge

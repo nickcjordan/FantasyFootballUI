@@ -7,8 +7,8 @@ import java.util.List;
 
 import fantasy.Log;
 import fantasy.builder.NFLBuilder;
-import fantasy.comparator.PlayerADPComparator;
 import fantasy.comparator.AlphabetizedTeamComparator;
+import fantasy.comparator.PlayerADPComparator;
 import fantasy.enums.Position;
 
 public class NFL {
@@ -103,7 +103,12 @@ public class NFL {
 	}
 
 	public static Player getPlayer(String p) {
-		return players.get(p);
+		Player player = players.get(p);
+		if (player == null) {
+			Log.err("Player " + p + " not found in players map");
+		}
+		return player;
+		/*return players.get(p);*/
 	}
 
 	public static void resetPlayers() {

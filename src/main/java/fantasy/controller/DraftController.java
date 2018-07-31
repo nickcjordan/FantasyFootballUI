@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fantasy.Log;
 import fantasy.builder.TeamBuilder;
-import fantasy.comparator.DraftOrderComparator;
+import fantasy.comparator.DraftSelectionOrderComparator;
+import fantasy.comparator.UserDraftOrderComparator;
 import fantasy.enums.Position;
 import fantasy.exception.FalifaException;
 import fantasy.logic.LogicHandler;
@@ -61,7 +62,7 @@ public class DraftController extends BaseController {
     private String prepareResults(Model model) {
     	ResultsProcessor.processResults(draft);
     	ArrayList<Drafter> orderedDrafters = new ArrayList<Drafter>(draft.getDrafters());
-    	Collections.sort(orderedDrafters, new DraftOrderComparator());
+    	Collections.sort(orderedDrafters, new UserDraftOrderComparator());
     	model.addAttribute("drafterResults", orderedDrafters);
     	return "resultsPage";
     }
@@ -69,6 +70,7 @@ public class DraftController extends BaseController {
 	private void doBaseDraft(Model model, Player player) {
 		Log.info("Player picked = " + player.getPlayerName());
 		draftPicks.add(draftPlayer(currentDrafter, player));
+		Collections.sort(draftPicks, new DraftSelectionOrderComparator());
 		checkIfEndOfRound();
 		moveToNextDrafter();
         addAttributes(model);
@@ -79,6 +81,9 @@ public class DraftController extends BaseController {
 		LogicHandler logic = new LogicHandler(currentDrafter);
 		int blankId = currentDrafter.getName().equals("Nick J") ? logic.getMySuggestions().get(0).getId() : logic.getAiPick().getId();
 		id = (playerId.isEmpty()) ? blankId:  Integer.parseInt(playerId);
+		if (playerId.isEmpty()) {
+			
+		}
 		return id;
 	}
 

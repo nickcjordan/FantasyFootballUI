@@ -60,6 +60,7 @@ public class StatsCleaner {
 					p.addNicksNotes(line.split("\",\"")[1]);
 				} catch (Exception e) {
 					Log.err("StatsCleaner.cleanupNickNotes() :: Error trying to cleanup Nick Notes");
+					e.printStackTrace();
 				}
 				sorted.add(p);
 			}
