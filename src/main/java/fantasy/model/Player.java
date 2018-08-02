@@ -1,13 +1,22 @@
 package fantasy.model;
 
-import java.util.ArrayList;
-import java.util.Map.Entry;
+import static fantasy.enums.CSVFieldMapping.ADP;
+import static fantasy.enums.CSVFieldMapping.AVG;
+import static fantasy.enums.CSVFieldMapping.BEST;
+import static fantasy.enums.CSVFieldMapping.BYE;
+import static fantasy.enums.CSVFieldMapping.PLAYER_NAME;
+import static fantasy.enums.CSVFieldMapping.POS;
+import static fantasy.enums.CSVFieldMapping.RANK;
+import static fantasy.enums.CSVFieldMapping.STD_DEV;
+import static fantasy.enums.CSVFieldMapping.TEAM_NAME;
+import static fantasy.enums.CSVFieldMapping.VERSUS_ADP;
+import static fantasy.enums.CSVFieldMapping.WORST;
 
-import fantasy.Log;
-import fantasy.builder.TeamBuilder;
+import java.util.ArrayList;
+import java.util.List;
+
 import fantasy.controller.BaseController;
 import fantasy.enums.Position;
-import static fantasy.enums.CSVFieldMapping.*;
 
 public class Player {
 
@@ -33,34 +42,37 @@ public class Player {
 	ArrayList<Player> backups;
 	int tier;
 	private String nickNotes;
+
 	
-	
-	public Player(String[] stats) {
-		super();
-		this.rank = stats[RANK.getIndex()];
-		this.teamName = extractTeamName(stats);
-		setPosAndPosRank(stats[POS.getIndex()]);
-		this.playerName = getRealName(stats);
-		this.bye = stats[BYE.getIndex()];
-		this.best = stats[BEST.getIndex()];
-		this.worst = stats[WORST.getIndex()];
-		this.avg = stats[AVG.getIndex()];
-		this.std_dev = stats[STD_DEV.getIndex()];
-		this.adp = getCorrectAdp(stats[ADP.getIndex()]);
+	public Player(List<String> split) {
+		this.rank = split.get(RANK.getIndex());
+		this.teamName = extractTeamName(split);
+		setPosAndPosRank(split.get(POS.getIndex()));
+		this.playerName = getRealName(split);
+		this.bye = split.get(BYE.getIndex());
+		this.best = split.get(BEST.getIndex());
+		this.worst = split.get(WORST.getIndex());
+		this.avg = split.get(AVG.getIndex());
+		this.std_dev = split.get(STD_DEV.getIndex());
+		this.adp = getCorrectAdp(split.get(ADP.getIndex()));
 		this.id = Integer.parseInt(this.rank);
-		this.versus = stats[VERSUS_ADP.getIndex()];
+		this.versus = split.get(VERSUS_ADP.getIndex());
 		this.available = true;
 		this.tags = "";
 		this.backups = new ArrayList<Player>();
 		this.tier = setTier();
 	}
 	
-	private String extractTeamName(String[] stats) {
-		if (stats[TEAM_NAME.getIndex()].isEmpty() || stats[TEAM_NAME.getIndex()].equals("NA")) {
-			String[] split = stats[PLAYER_NAME.getIndex()].split(" ");
-			stats[TEAM_NAME.getIndex()] = split[split.length - 1];
+	private String getRealName(List<String> split) {
+		return (split.get(POS.getIndex()).contains("D")) ? split.get(TEAM_NAME.getIndex()) : split.get(PLAYER_NAME.getIndex());
+	}
+
+	private String extractTeamName(List<String> split) {
+		if (split.get(TEAM_NAME.getIndex()).isEmpty() || split.get(TEAM_NAME.getIndex()).equals("NA")) {
+			String[] splitText = split.get(PLAYER_NAME.getIndex()).split(" ");
+			split.set(TEAM_NAME.getIndex(), splitText[splitText.length - 1]);
 		}
-		return stats[TEAM_NAME.getIndex()];
+		return split.get(TEAM_NAME.getIndex());
 	}
 
 	private int setTier() {
@@ -73,10 +85,6 @@ public class Player {
 		return 14;
 	}
 
-	private String getRealName(String[] stats) {
-		return (stats[POS.getIndex()].contains("D")) ? stats[TEAM_NAME.getIndex()] : stats[PLAYER_NAME.getIndex()];
-	}
-	
 	public int getTier() {
 		return tier;
 	}
@@ -106,7 +114,7 @@ public class Player {
 		if (s.contains(".0")) {
 			s = s.replace(".0", "");
 		}
-		return (s.equals("NA")) ? this.rank : s;
+		return (s.equals("NA") || s.trim().equals("")) ? this.rank : s;
 	}
 
 	public String checkForHandcuff() {

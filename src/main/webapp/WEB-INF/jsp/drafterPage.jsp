@@ -19,7 +19,7 @@
 	
 			<div class="col-md-1">
 				<div class="menu-drafters">
-				<h3 class="center underline" ><strong>Drafters:</strong></h3>
+					<h3 class="center underline" ><strong>Drafters:</strong></h3>
 					<div class="navbar-header">
 						<ul class="nav nav3 nav-pills nav-stacked nav3-stacked nav-stacked-teams" >
 							<c:forEach items="${drafters}" var="drafter">

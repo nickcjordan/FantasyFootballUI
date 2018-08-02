@@ -1,5 +1,7 @@
 package fantasy.builder;
 
+import java.util.List;
+
 import org.springframework.util.StringUtils;
 
 import fantasy.Log;
@@ -9,34 +11,47 @@ import fantasy.model.Player;
 
 public class PlayerBuilder {
 	
-	public static Player buildPlayer(String line) {
+	public static Player buildPlayer(List<String> split) {
 		Player player =  null;
 		try {
-			player =  new Player(parseLineForPlayerStats(line));
+			player =  new Player(split);
 			Log.deb("PlayerBuilder.buildPlayer() :: PLAYER BUILT=[" + String.format("(%d) %s - %s", player.getId(), player.getPlayerName(), player.getTeamName()) + "]");
 		} catch (Exception e) {
-			Log.err("ERROR parsing line:\n" + line + "\n" + e.getMessage());
+			Log.err("ERROR parsing line:\n" + e.getMessage());
 		}
 		return player;
 	}
 	
-	public static String[] parseLineForPlayerStats(String line) {
-		String[] cols = line.split(",");
-		String[] edited = new String[cols.length];
-		for (int i = 0; i < cols.length; i++){
-			String editedField = cols[i].replaceAll("\"", "");
-			edited[i] = (StringUtils.isEmpty(editedField)) ? "NA" : editedField;
+	public static void addNote(List<String> split) {
+		if (split.size() > 5) {
+			try {
+				Player p = NFL.getPlayer(split);
+				p.setNotes(buildNotes(split, 5));
+			} catch (Exception e) {
+				Log.err("ERROR could not add notes: PlayerBuilder.addnote() :: " + split.get(0) + "\n");
+				e.printStackTrace();
+			}
 		}
-		return edited;
 	}
-	
-	public static String[] parseLineForNotes(String line) {
-		String[] cols = line.split("\",\"");
-		String[] edited = new String[cols.length];
-		for (int i = 0; i < cols.length; i++){
-			edited[i] = cols[i].replaceAll("\"", "");
+
+	public static void addAdditionalNote(List<String> split) {
+		try {
+			NFL.getPlayer(split.get(0)).addAdditionalNotes(buildNotes(split, 1));
+		} catch (Exception e) {
+			Log.err(e.getMessage() + "... was trying to add additional notes.");
 		}
-		return edited;
+	}
+
+	private static String buildNotes(List<String> split, int start) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = start; i < split.size(); i++) {
+			String note = split.get(i) == null ? "" : split.get(i);
+			builder.append(note.trim());
+			if (i != split.size()-1) {
+				builder.append(" ");
+			}
+		}
+		return getPrettyNotes(builder.toString().split(" "));
 	}
 	
 	private static String getPrettyNotes(String[] words) {
@@ -52,45 +67,9 @@ public class PlayerBuilder {
 		return paragraph.toString();
 	}
 
-	public static void addNote(String line) {
-		//Log.deb("Adding notes for player: " + line);
-		String[] notes = parseLineForNotes(line);
-		if (notes.length > 5) {
-			try {
-				Player p = NFL.getPlayer(notes);
-				p.setNotes(buildNotes(notes, 5));
-			} catch (Exception e) {
-				Log.err("ERROR could not add notes: PlayerBuilder.addnote() :: " + line + "\n");
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public static void addAdditionalNote(String line) {
-		String[] notes = parseLineForNotes(line);
-		try {
-			NFL.getPlayer(notes[0]).addAdditionalNotes(buildNotes(notes, 1));
-		} catch (Exception e) {
-			Log.err(e.getMessage() + "... was trying to add additional notes.");
-		}
-	}
-
-	private static String buildNotes(String[] notes, int start) {
-		StringBuilder builder = new StringBuilder();
-		for (int i = start; i < notes.length; i++) {
-			String note = notes[i] == null ? "" : notes[i];
-			builder.append(note.trim());
-			if (i != notes.length-1) {
-				builder.append(" ");
-			}
-		}
-		return getPrettyNotes(builder.toString().split(" "));
-	}
-
-	public static void addTag(String nextLine) throws FalifaException {
-		String[] details = nextLine.split(",");
-		Player player = NFL.getPlayer(details[0].trim());
-		player.setTags(details[1].trim());
+	public static void addTag(List<String> split) throws FalifaException {
+		Player player = NFL.getPlayer(split.get(0));
+		player.setTags(player.getTags()+split.get(1));
 	}
 
 }

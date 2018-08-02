@@ -1,62 +1,81 @@
 #	RISK("!"), SLEEPER("$"), ROOKIE("R"), NEW_TEAM("@"), FAVORITE("*"), RISING("+"), FALLING("-"), INJURY_RISK("i"), BUST("B")
-Alex Collins, B
-Alex Smith, $
-Amari Cooper, $
-Andrew Luck, $B
-Anthony Miller, +
-Ben Roethlisberger, B
-Brandin Cooks, $B
-Carlos Hyde, B
-Charles Clay, $
-Chris Carson, $
-Corey Davis, $
-David Njoku, $
-Derrick Henry, $
-Devin Funchess, $
-Drew Brees, B
-Duke Johnson, $
-Eli Manning, $
-Emmanuel Sanders, $
-Golden Tate, B
-Jack Doyle, B
-Jared Cook, B
-Jarvis Landry, B
-Jay Ajayi, B
-Jerick McKinnon, $
-Jimmy Graham, $B
-Jordan Reed, B
-Jordan Wilkins, $
-Josh Gordon, $
-Justin Jackson, $
-Kalen Ballage, $
-Kenyan Drake, B
-Kirk Cousins, B
-LeSean McCoy, B
-Marcus Mariota, $
-Marshawn Lynch, B
-Matt Ryan, $
-Matthew Stafford, B
-Michael Crabtree, $
-Mike Gesicki, $
-Mike Williams, $
-Mitch Trubisky, $
-Nyheim Hines, $
-O.J. Howard, $
-Patrick Mahomes, $
-Paul Richardson, $
-Rashaad Penny, $B
-Rex Burkhead, $
-Ricky Seals-Jones, $
-Robert Woods, B
-Ronald Jones II, $
-Royce Freeman, $
-Russell Wilson, B
-Ryan Griffin, $
-Sammy Watkins, B
-Saquon Barkley, B
-Sterling Shepard, $
-Tom Brady, B
-Trey Burton, $
-Tyler Eifert, $
-Tyreek Hill, B
-Will Fuller, $
+Aaron Jones,$
+Alex Collins,B
+Alex Smith,$
+Alvin Kamara,*
+Amari Cooper,$+
+Andrew Luck,$B
+Anthony Miller,+
+Ben Roethlisberger,B
+Brandin Cooks,$B
+Carlos Hyde,B
+Chad Williams,$
+Charles Clay,$
+Chris Carson,$
+Chris Hogan,+$
+Cooper Kupp,$
+Corey Davis,$$
+D.J. Moore,$
+Dalvin Cook,+
+Davante Adams,+
+David Njoku,$
+Derrick Henry,$
+Derrius Guice,+$
+Devin Funchess,$-
+Doug Baldwin,+
+Drew Brees,B
+Duke Johnson,$
+Eli Manning,$
+Emmanuel Sanders,$
+Geronimo Allison,$
+Golden Tate,B
+Hayden Hurst,$
+Jack Doyle,B
+Jamaal Williams,+
+Jared Cook,B
+Jarvis Landry,B
+Jay Ajayi,B
+Jerick McKinnon,$+
+Jimmy Graham,$B+
+Jordan Reed,B
+Jordan Wilkins,$
+Josh Gordon,$+
+Julian Edelman,+
+Justin Jackson,$
+Kalen Ballage,$
+Kenyan Drake,B
+Kirk Cousins,B
+LeSean McCoy,B
+Marcus Mariota,$
+Marshawn Lynch,B
+Matt Ryan,$
+Matthew Stafford,B
+Michael Crabtree,$
+Michael Gallup,$
+Mike Gesicki,$
+Mike Williams,$$
+Mitch Trubisky,$
+Nyheim Hines,$
+O.J. Howard,$
+Patrick Mahomes,$
+Paul Richardson,$
+Pierre Garcon,$
+Quincy Enunwa,$
+Randall Cobb,+
+Rashaad Penny,$B
+Rex Burkhead,$
+Ricky Seals-Jones,$
+Robert Woods,B+$*
+Ronald Jones II,$
+Royce Freeman,$
+Russell Wilson,B
+Ryan Grant,$
+Ryan Griffin,$
+Sammy Watkins,B
+Saquon Barkley,B
+Sterling Shepard,$
+Tom Brady,B
+Trey Burton,$
+Tyler Eifert,$
+Tyreek Hill,B
+Will Fuller,$$

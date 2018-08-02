@@ -81,6 +81,7 @@ public class PageController extends BaseController {
 			model.addAttribute(position.getAbbrev() + "List", NFL.getAvailablePlayersByPositionAsList(position));
 		}
     	model.addAttribute("drafters", DraftController.getCorrectlyOrderedDrafterList());
+      	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
 		return "dashboardPage";
     }
     

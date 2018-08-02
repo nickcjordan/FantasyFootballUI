@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fantasy.Log;
-import fantasy.cleanup.StatsCleaner;
 import fantasy.enums.DraftType;
 import fantasy.enums.Position;
 import fantasy.exception.FalifaException;
+import fantasy.io.StatsCleaner;
 import fantasy.model.Draft;
 import fantasy.model.NFL;
 
@@ -30,6 +30,7 @@ public class HomeController extends BaseController {
     	draftOrderIndex = 0;
     	StatsCleaner.cleanupTags();
     	StatsCleaner.cleanupNickNotes();
+    	
     	System.out.println("\n\n<^>     Ready to Draft     <^>\n\n");
         return "home";
     }
@@ -53,6 +54,7 @@ public class HomeController extends BaseController {
 		model.addAttribute("draftPicks", draftPicks);
 		model.addAttribute("playerList", NFL.getAllAvailablePlayersByADPList());
 		model.addAttribute("currentDraftedTeam", currentDrafter.getDraftedTeam());
+      	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
 		for (Position position : Position.values()) {
 			model.addAttribute("drafted" + position.getAbbrev(), currentDrafter.getDraftedTeam().getPlayersByPosition(position)); 
 			model.addAttribute(position.getAbbrev() + "List", NFL.getAvailablePlayersByPositionAsList(position));

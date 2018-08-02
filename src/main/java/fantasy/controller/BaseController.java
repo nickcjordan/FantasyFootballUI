@@ -2,19 +2,25 @@ package fantasy.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.stereotype.Controller;
 
 import fantasy.Log;
 import fantasy.enums.DraftType;
+import fantasy.io.DataFileReader;
 import fantasy.logic.LogicHandler;
 import fantasy.model.Draft;
 import fantasy.model.DraftPick;
 import fantasy.model.Drafter;
 import fantasy.model.Player;
+import fantasy.model.RoundSpecificStrategy;
 
 @Controller
 public class BaseController {
@@ -34,13 +40,16 @@ public class BaseController {
 	public static List<DraftPick> draftPicks;
 	public static String errorMessage = null;
 	
+	public static Map<String, RoundSpecificStrategy> strategyByRound;
+	
 	
 	static {
 		Properties prop = new Properties();
 		try {
     		prop.load(new FileInputStream(new File("logic.properties")));
+    		strategyByRound = getStrategyFromFile();
     	} catch (IOException ex) {
-    		Log.err("Could not load " + "logic.properties");
+    		Log.err("Error pulling data from file");
         }
 	}
 	
@@ -54,6 +63,32 @@ public class BaseController {
 		return prop;
 	}
 	
+	private static Map<String, RoundSpecificStrategy> getStrategyFromFile() throws FileNotFoundException {
+		Map<String, RoundSpecificStrategy> map = new HashMap<String, RoundSpecificStrategy>();
+		for (List<String> split : new DataFileReader().getSplitLinesFromFile("resources/draftStrategyByRound.csv")) {
+			RoundSpecificStrategy strategy = buildStrategy(split);
+			map.put(strategy.getRound(), strategy);
+		}
+		return map;
+	}
+
+	private static RoundSpecificStrategy buildStrategy(List<String> split) {
+		RoundSpecificStrategy strategy = new RoundSpecificStrategy();
+		strategy.setRound(split.get(0));
+		strategy.setStrategyText(split.get(1));
+		strategy.setTargetPositions(split.get(2));
+		strategy.setTargetPlayers(buildListOfTargetPlayers(split));
+		return strategy;
+	}
+
+	private static List<String> buildListOfTargetPlayers(List<String> split) {
+		List<String> players = new ArrayList<String>();
+		for (int i = 3; i < split.size(); i++) {
+			players.add(split.get(i));
+		}
+		return players;
+	}
+
 	public static double getPercent() {
 		double percent = 0;
 		if (pickNumber == 1) {
@@ -66,8 +101,7 @@ public class BaseController {
 	}
 	
 	List<Player> getSuggs(Drafter drafter) {
-		LogicHandler logic = new LogicHandler(drafter);
-		return logic.getMySuggestions();
+		return new LogicHandler(drafter).getMySuggestions();
 	}
     
 	public static int get(String property) {

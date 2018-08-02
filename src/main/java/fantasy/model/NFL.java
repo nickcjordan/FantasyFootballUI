@@ -1,5 +1,8 @@
 package fantasy.model;
 
+import static fantasy.enums.CSVFieldMapping.PLAYER_NAME;
+import static fantasy.enums.CSVFieldMapping.TEAM_NAME;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -86,16 +89,16 @@ public class NFL {
 		return allPicked;
 	}
 	
-	public static Player getPlayer(String[] notes) {
-		return (players.get(notes[1]) == null) ? players.get(extractTeamName(notes)) : players.get(notes[1]);
+	public static Player getPlayer(List<String> split) {
+		return (players.get(split.get(1)) == null) ? players.get(extractTeamName(split)) : players.get(split.get(1));
 	}
 	
-	private static String extractTeamName(String[] stats) {
-		if (stats[2].isEmpty()) {
-			String[] split = stats[1].split(" ");
-			stats[2] = split[split.length - 1];
+	private static String extractTeamName(List<String> split) {
+		if (split.get(TEAM_NAME.getIndex()).isEmpty() || split.get(TEAM_NAME.getIndex()).equals("NA")) {
+			String[] splitText = split.get(PLAYER_NAME.getIndex()).split(" ");
+			split.set(TEAM_NAME.getIndex(), splitText[splitText.length - 1]);
 		}
-		return stats[2];
+		return split.get(TEAM_NAME.getIndex());
 	}
 	
 	public static Player getPlayer(int id) {

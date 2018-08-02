@@ -21,22 +21,25 @@
 	
 	<div class="row">
 			<div class="col-md-2">
-				<div class="center"><h3><strong>Draft Feed:</strong></h3></div>
+				<div class="center thin-text"><h3><strong>Draft Feed:</strong></h3></div>
 				<%@include file="draftFeed.jsp"%>
 			</div>
 			
 			
 			<div class="col-md-2">
-				
-				<div class="center"><h3><strong>${currentDrafter.name}'s Team:</strong></h3></div>
+				<div class="row">
+					<div class="center thin-text"><h3><strong>${currentDrafter.name}'s Team:</strong></h3></div>
 					<%@include file="draftersTeam.jsp"%>
-				
+				</div>
+				<div class="row">
+					<%@include file="strategyBox.jsp"%>
+				</div>
 			</div>
 			
+			
 			<div class="col-md-8">
-				<div class="center"><h3><strong>Suggested Available Players:</strong></h3></div>
-					<%@include file="suggestionTable.jsp"%>
-
+				<div class="center thin-text"><h3><strong>Suggested Available Players:</strong></h3></div>
+				<%@include file="suggestionTable.jsp"%>
 			</div>
 	</div>
 

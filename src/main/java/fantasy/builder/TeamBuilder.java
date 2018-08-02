@@ -22,10 +22,9 @@ public class TeamBuilder {
 		setNameMappings();
 		id = 0;
 	}
-
-	public static Team buildTeamFromInput(String line) {
-		String[] in = line.split(",");
-		return new NFLTeam(in[0], in[1], in[2]);
+	
+	public static Team buildTeamFromInput(List<String> split) {
+		return new NFLTeam(split.get(0), split.get(1), split.get(2));
 	}
 	
 	public static String getProperTeamName(String teamName) {
@@ -130,5 +129,4 @@ public class TeamBuilder {
 		}
 	}
 
-	
 }
