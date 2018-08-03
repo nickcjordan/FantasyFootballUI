@@ -15,6 +15,8 @@ import static fantasy.enums.CSVFieldMapping.WORST;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.StringUtils;
+
 import fantasy.controller.BaseController;
 import fantasy.enums.Position;
 
@@ -67,10 +69,11 @@ public class Player {
 		return (split.get(POS.getIndex()).contains("D")) ? split.get(TEAM_NAME.getIndex()) : split.get(PLAYER_NAME.getIndex());
 	}
 
-	private String extractTeamName(List<String> split) {
-		if (split.get(TEAM_NAME.getIndex()).isEmpty() || split.get(TEAM_NAME.getIndex()).equals("NA")) {
+	private static String extractTeamName(List<String> split) {
+		String name = split.get(TEAM_NAME.getIndex());
+		if (StringUtils.isEmpty(name) || name.equals("NA") || name.equals("-")) {
 			String[] splitText = split.get(PLAYER_NAME.getIndex()).split(" ");
-			split.set(TEAM_NAME.getIndex(), splitText[splitText.length - 1]);
+			split.set(TEAM_NAME.getIndex(), splitText[splitText.length - 1]); // "Dallas Cowboys" --> split.set("Cowboys")
 		}
 		return split.get(TEAM_NAME.getIndex());
 	}
@@ -114,7 +117,7 @@ public class Player {
 		if (s.contains(".0")) {
 			s = s.replace(".0", "");
 		}
-		return (s.equals("NA") || s.trim().equals("")) ? this.rank : s;
+		return (s.equals("NA") || s.trim().equals("") || s.equals("-")) ? "500" : s;
 	}
 
 	public String checkForHandcuff() {

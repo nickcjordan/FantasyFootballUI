@@ -48,11 +48,15 @@ public class HomeController extends BaseController {
         model.addAttribute("draftType", draftType);
     	model.addAttribute("draft", draft);
 		model.addAttribute("currentDrafter", currentDrafter);
-		model.addAttribute("suggestions", getSuggs(currentDrafter));
+		
+		model.addAttribute("playersSortedBySuggestions", getSuggs(currentDrafter));
+		model.addAttribute("playersSortedByAdp", NFL.getAllAvailablePlayersByADP());
+		model.addAttribute("playersSortedByRank", NFL.getAllAvailablePlayersByRank());
+		
 		model.addAttribute("roundNumber", roundNum);
 		model.addAttribute("pickNumber", pickNumber);
 		model.addAttribute("draftPicks", draftPicks);
-		model.addAttribute("playerList", NFL.getAllAvailablePlayersByADPList());
+		model.addAttribute("playerList", NFL.getAllAvailablePlayersByADP());
 		model.addAttribute("currentDraftedTeam", currentDrafter.getDraftedTeam());
       	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
 		for (Position position : Position.values()) {

@@ -13,7 +13,9 @@ public class DataFileReader {
 	public List<List<String>> getSplitLinesFromFile(String fileName) throws FileNotFoundException {
 		List<List<String>> splitLinesList = new ArrayList<>();
 		Scanner scanner = new Scanner(new File(fileName));
-		scanner.nextLine(); //move past header
+		if (scanner.hasNextLine()) {
+			scanner.nextLine(); //move past header
+		}
 		while(scanner.hasNextLine()){
 			String line = scanner.nextLine();
 			if ((!StringUtils.isEmpty(line)) && (!line.equals("\"\""))){
@@ -28,7 +30,7 @@ public class DataFileReader {
 	private List<String> splitAndCleanupLine(String line) {
 		List<String> splitLine = new ArrayList<String>();
 		for (String text : line.split(",")) {
-			String edited = (text == null || StringUtils.isEmpty(text.trim())) ? "NA" : text.trim();
+			String edited = (text == null || StringUtils.isEmpty(text.trim()) || text.trim().equals("\"\"")) ? "-" : text.trim();
 			if (edited.startsWith("\"")) {
 				edited = edited.substring(1); //remove beginning quote
 			}

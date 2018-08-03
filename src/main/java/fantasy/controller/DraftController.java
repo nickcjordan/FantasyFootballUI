@@ -41,7 +41,6 @@ public class DraftController extends BaseController {
     	return draftHasCompleted() ? prepareResults(model) : mockDraftMode ? mockDraft(model) : "dashboardPage";
     }
 
-	@RequestMapping(value = "/mock")
     public String mockDraft(Model model) throws FalifaException {
     	if (currentDrafter.getName().equals("Nick J")) {
     		return "dashboardPage";
@@ -51,7 +50,6 @@ public class DraftController extends BaseController {
     	return draftHasCompleted() ? prepareResults(model) : mockDraft(model);
     }
     
-    @RequestMapping(value = "/auto")
     public String autoDraft(Model model) throws FalifaException {
     	LogicHandler logic = new LogicHandler(currentDrafter);
     	Player player = (currentDrafter.getName().equals("Nick J")) ? logic.getMySuggestions().get(0) : logic.getAiPick();
@@ -91,7 +89,11 @@ public class DraftController extends BaseController {
 		model.addAttribute("progressPercent", getPercent());
 		model.addAttribute("draft", draft);
         model.addAttribute("currentDrafter", currentDrafter);
-        model.addAttribute("suggestions", getSuggs(currentDrafter));
+        
+        model.addAttribute("playersSortedBySuggestions", getSuggs(currentDrafter));
+		model.addAttribute("playersSortedByAdp", NFL.getAllAvailablePlayersByADP());
+		model.addAttribute("playersSortedByRank", NFL.getAllAvailablePlayersByRank());
+        
         model.addAttribute("roundNumber", ((roundNum < NUMBER_OF_ROUNDS) ? roundNum : NUMBER_OF_ROUNDS));
         model.addAttribute("pickNumber", pickNumber);
         model.addAttribute("currentDraftedTeam", currentDrafter.getDraftedTeam());

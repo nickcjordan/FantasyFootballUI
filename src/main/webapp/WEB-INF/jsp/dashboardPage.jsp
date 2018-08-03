@@ -20,36 +20,60 @@
 	<%@include file="nav.jsp"%>
 	
 	<div class="row">
-			<div class="col-md-2">
-				<div class="center thin-text"><h3><strong>Draft Feed:</strong></h3></div>
-				<%@include file="draftFeed.jsp"%>
+		<div class="col-md-2">
+			<div class="center thin-text"><h3><strong>Draft Feed:</strong></h3></div>
+			<%@include file="draftFeed.jsp"%>
+		</div>
+		
+		
+		<div class="col-md-2">
+			<div class="row">
+				<div class="center thin-text"><h3><strong>${currentDrafter.name}'s Team:</strong></h3></div>
+				<%@include file="draftersTeam.jsp"%>
 			</div>
+			<div class="row">
+				<%@include file="strategyBox.jsp"%>
+			</div>
+		</div>
+		
+		
+		<div class="col-md-8">
+			<!-- <div class="center thin-text"><h3><strong>Suggested Available Players:</strong></h3></div> -->
 			
-			
-			<div class="col-md-2">
-				<div class="row">
-					<div class="center thin-text"><h3><strong>${currentDrafter.name}'s Team:</strong></h3></div>
-					<%@include file="draftersTeam.jsp"%>
+			<ul class="nav nav-tabs all-suggestion-tabs" id="suggestionTableTab" role="tablist">
+				<li class="nav-item active suggestion-tab"><a class="nav-link suggestion-link" id="suggs-tab" data-toggle="tab" href="#suggs" role="tab" aria-controls="suggs" aria-selected="true">Suggestions</a></li>
+				<li class="nav-item suggestion-tab"><a class="nav-link suggestion-link" id="adp-tab" data-toggle="tab" href="#adp" role="tab" aria-controls="adp" aria-selected="false">ADP</a></li>
+				<li class="nav-item suggestion-tab"><a class="nav-link suggestion-link" id="rank-tab" data-toggle="tab" href="#rank" role="tab" aria-controls="rank" aria-selected="false">ECR</a></li>
+				<li class="center thin-text suggestion-title-tag"> <strong>Suggested Available Players:</strong></li>
+			</ul>
+			<div class="tab-content" id="suggestionTableTabContent">
+				<div class="tab-pane fade active in" id="suggs" role="tabpanel" aria-labelledby="suggs-tab">
+					<%-- <c:set var="suggestionTableContent" value="${playersSortedBySuggestions}" /> --%>
+					<%@include file="suggestionTable.jsp"%>
 				</div>
-				<div class="row">
-					<%@include file="strategyBox.jsp"%>
+				<div class="tab-pane fade" id="adp" role="tabpanel" aria-labelledby="adp-tab">
+					<%-- <c:set var="suggestionTableContent" value="${playersSortedByAdp}" scope="session" /> --%>
+					<%@include file="adpTable.jsp"%>
+				</div>
+				<div class="tab-pane fade" id="rank" role="tabpanel" aria-labelledby="rank-tab">
+					<%-- <c:set var="suggestionTableContent" value="${playersSortedByRank}" scope="session" /> --%>
+					<%@include file="rankTable.jsp"%>
 				</div>
 			</div>
-			
-			
-			<div class="col-md-8">
-				<div class="center thin-text"><h3><strong>Suggested Available Players:</strong></h3></div>
-				<%@include file="suggestionTable.jsp"%>
-			</div>
+		
+			<!-- END EDITING -->
+
 	</div>
+</div>
 
-			<c:if test="<%=fantasy.controller.BaseController.errorMessage != null%>">
-				<script>
-					alert("<%=fantasy.controller.BaseController.errorMessage%>");
-				</script>
-			</c:if>
 
-			<%@include file="progressBar.jsp"%>
+	<c:if test="<%=fantasy.controller.BaseController.errorMessage != null%>">
+		<script>
+			alert("<%=fantasy.controller.BaseController.errorMessage%>");
+		</script>
+	</c:if>
+
+	<%@include file="progressBar.jsp"%>
 			
 	</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

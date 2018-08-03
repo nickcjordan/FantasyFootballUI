@@ -21,7 +21,7 @@ public class LogicHandler {
 	public LogicHandler(Drafter drafter) {
 		this.drafter = drafter;
 		this.team = drafter.getDraftedTeam();
-		this.suggestions = new ArrayList<Player>(NFL.getAllAvailablePlayersByADPList());
+		this.suggestions = new ArrayList<Player>(NFL.getAllAvailablePlayersByADP());
 		this.manipulator = new ListManipulator(suggestions, team);
 	}
 
@@ -35,7 +35,7 @@ public class LogicHandler {
 	
 	
 	public List<Player> getMySuggestions() {
-		for (Player player : NFL.getAllAvailablePlayersByADPList()) {
+		for (Player player : NFL.getAllAvailablePlayersByADP()) {
 			manipulator.removeTooEarlyPositions(player);
 			manipulator.removeTooFullPositions(player);
 		}
@@ -45,7 +45,7 @@ public class LogicHandler {
 	}
 	
 	public Player getAiPick() {
-		for (Player player : NFL.getAllAvailablePlayersByADPList()) {
+		for (Player player : NFL.getAllAvailablePlayersByADP()) {
 			manipulator.removeTooEarlyPositions(player);
 			manipulator.removeTooFullPositions(player);
 		}

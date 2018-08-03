@@ -22,7 +22,7 @@
 		</thead>
 		
 		<tbody class="scaled-body">
-			<c:forEach items="${playersSortedBySuggestions}" var="player">
+			<c:forEach items="${playersSortedByRank}" var="player">
 			
 				
 				<tr class="tier${player.tier}">

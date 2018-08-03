@@ -23,7 +23,7 @@ public class PageController extends BaseController {
     @RequestMapping(value = "/pos")
     public String positionPage(@RequestParam(required=false, defaultValue="all") String pos, Model model) throws FalifaException {
     	if (pos.equals("all")) {
-	    	model.addAttribute("playerList", NFL.getAllAvailablePlayersByADPList());
+	    	model.addAttribute("playerList", NFL.getAllAvailablePlayersByADP());
 	    	model.addAttribute("positionName", "All Available Players");
 		} else {
 	    	model.addAttribute("playerList", NFL.getAvailablePlayersByPositionAsList(Position.get(pos)));
@@ -74,8 +74,13 @@ public class PageController extends BaseController {
 		model.addAttribute("roundNumber", roundNum);
 		model.addAttribute("pickNumber", pickNumber);
 		model.addAttribute("draftPicks", draftPicks);
-		model.addAttribute("playerList", NFL.getAllAvailablePlayersByADPList());
+		model.addAttribute("playerList", NFL.getAllAvailablePlayersByADP());
         model.addAttribute("currentDraftedTeam", currentDrafter.getDraftedTeam());
+        
+        model.addAttribute("playersSortedBySuggestions", getSuggs(currentDrafter));
+		model.addAttribute("playersSortedByAdp", NFL.getAllAvailablePlayersByADP());
+		model.addAttribute("playersSortedByRank", NFL.getAllAvailablePlayersByRank());
+		
 		for (Position position : Position.values()) {
 			model.addAttribute("drafted" + position.getAbbrev(), currentDrafter.getDraftedTeam().getPlayersByPosition(position)); 
 			model.addAttribute(position.getAbbrev() + "List", NFL.getAvailablePlayersByPositionAsList(position));

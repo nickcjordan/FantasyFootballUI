@@ -5,13 +5,17 @@ import static fantasy.enums.CSVFieldMapping.TEAM_NAME;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
+import org.springframework.util.StringUtils;
 
 import fantasy.Log;
 import fantasy.builder.NFLBuilder;
 import fantasy.comparator.AlphabetizedTeamComparator;
 import fantasy.comparator.PlayerADPComparator;
+import fantasy.comparator.PlayerRankComparator;
 import fantasy.enums.Position;
 
 public class NFL {
@@ -67,15 +71,23 @@ public class NFL {
 		return byPosition;
 	}
 	
-	public static List<Player> getAllAvailablePlayersByADPList(){
+	private static List<Player> getAllAvailablePlayers(Comparator<Player> comparator){
 		List<Player> allAvailable = new ArrayList<Player>();
 		for (Player player : players.values()){
 			if (player.isAvailable()){
 				allAvailable.add(player);
 			}
 		}
-		Collections.sort(allAvailable, new PlayerADPComparator());
+		Collections.sort(allAvailable, comparator);
 		return allAvailable;
+	}
+	
+	public static List<Player> getAllAvailablePlayersByADP(){
+		return getAllAvailablePlayers(new PlayerADPComparator());
+	}
+	
+	public static List<Player> getAllAvailablePlayersByRank(){
+		return getAllAvailablePlayers(new PlayerRankComparator());
 	}
 	
 	public static List<Player> getAllPickedPlayersList(){
@@ -94,9 +106,10 @@ public class NFL {
 	}
 	
 	private static String extractTeamName(List<String> split) {
-		if (split.get(TEAM_NAME.getIndex()).isEmpty() || split.get(TEAM_NAME.getIndex()).equals("NA")) {
+		String name = split.get(TEAM_NAME.getIndex());
+		if (StringUtils.isEmpty(name) || name.equals("NA") || name.equals("-")) {
 			String[] splitText = split.get(PLAYER_NAME.getIndex()).split(" ");
-			split.set(TEAM_NAME.getIndex(), splitText[splitText.length - 1]);
+			split.set(TEAM_NAME.getIndex(), splitText[splitText.length - 1]); // "Dallas Cowboys" --> split.set("Cowboys")
 		}
 		return split.get(TEAM_NAME.getIndex());
 	}
@@ -111,7 +124,6 @@ public class NFL {
 			Log.err("Player " + p + " not found in players map");
 		}
 		return player;
-		/*return players.get(p);*/
 	}
 
 	public static void resetPlayers() {
