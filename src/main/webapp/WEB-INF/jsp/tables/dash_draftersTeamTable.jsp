@@ -13,27 +13,27 @@
 		<tbody>
 			<tr class="posLine"><td class="no-border"><strong>QB</strong></td></tr>
 			<c:forEach items="${currentDraftedTeam.qb}" var="player">
-				<%@include file="dash_draftersTeam.jsp"%>
+				<%@include file="lists/dash_draftersTeamList.jsp"%>
 			</c:forEach>
 			<tr class="posLine"><td class="no-border"><strong>RB</strong></td></tr>
 			<c:forEach items="${currentDraftedTeam.rb}" var="player">
-				<%@include file="dash_draftersTeam.jsp"%>
+				<%@include file="lists/dash_draftersTeamList.jsp"%>
 			</c:forEach>
 			<tr class="posLine"><td class="no-border"><strong>WR</strong></td></tr>
 			<c:forEach items="${currentDraftedTeam.wr}" var="player">
-				<%@include file="dash_draftersTeam.jsp"%>
+				<%@include file="lists/dash_draftersTeamList.jsp"%>
 			</c:forEach>
 			<tr class="posLine"><td class="no-border"><strong>TE</strong></td></tr>
 			<c:forEach items="${currentDraftedTeam.te}" var="player">
-				<%@include file="dash_draftersTeam.jsp"%>
+				<%@include file="lists/dash_draftersTeamList.jsp"%>
 			</c:forEach>
 			<tr class="posLine"><td class="no-border"><strong>K</strong></td></tr>
 			<c:forEach items="${currentDraftedTeam.k}" var="player">
-				<%@include file="dash_draftersTeam.jsp"%>
+				<%@include file="lists/dash_draftersTeamList.jsp"%>
 			</c:forEach>
 			<tr class="posLine"><td class="no-border"><strong>DST</strong></td></tr>
 			<c:forEach items="${currentDraftedTeam.d}" var="player">
-				<%@include file="dash_draftersTeam.jsp"%>
+				<%@include file="lists/dash_draftersTeamList.jsp"%>
 			</c:forEach>
 		</tbody>
 	</table>

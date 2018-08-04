@@ -32,7 +32,7 @@ public class PageController extends BaseController {
         model.addAttribute("roundNumber", roundNum);
         model.addAttribute("pickNumber", pickNumber);
         model.addAttribute("progressPercent", getPercent());
-        return "positionPage";
+        return "pages/positionPage";
     }
     
     @RequestMapping(value = "/nflTeams")
@@ -44,7 +44,7 @@ public class PageController extends BaseController {
 		model.addAttribute("allTeams", NFL.getTeamList());
         model.addAttribute("roundNumber", roundNum);
         model.addAttribute("pickNumber", pickNumber);
-        return "teamPage";
+        return "pages/teamPage";
     }
     
     @RequestMapping(value = "/drafters")
@@ -61,7 +61,7 @@ public class PageController extends BaseController {
 		model.addAttribute("drafters", draft.getDrafters());
         model.addAttribute("roundNumber", roundNum);
         model.addAttribute("pickNumber", pickNumber);
-        return "drafterPage";
+        return "pages/drafterPage";
     }
     
     @RequestMapping(value = "/dashboard")
@@ -87,7 +87,7 @@ public class PageController extends BaseController {
 		}
     	model.addAttribute("drafters", DraftController.getCorrectlyOrderedDrafterList());
       	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
-		return "dashboardPage";
+		return "pages/dashboardPage";
     }
     
     @RequestMapping(value = "/draftBoard")
@@ -100,7 +100,7 @@ public class PageController extends BaseController {
     	model.addAttribute("draft", draft);
     	model.addAttribute("roundNumber", roundNum);
     	model.addAttribute("pickNumber", pickNumber);
-    	return "draftBoardPage";
+    	return "pages/draftBoardPage";
     }
     
 }

@@ -44,6 +44,12 @@ public class Player {
 	ArrayList<Player> backups;
 	int tier;
 	private String nickNotes;
+	String oline_rank;
+	String oline_passScore;
+	String oline_runScore;
+	String oline_avgScore;
+	String totalTargets;
+	String avgTargets;
 
 	
 	public Player(List<String> split) {
@@ -364,7 +370,55 @@ public class Player {
 	public void setBackups(ArrayList<Player> backups) {
 		this.backups = backups;
 	}
-	
-	
 
+	public String getOline_rank() {
+		return oline_rank;
+	}
+
+	public void setOline_rank(String oline_rank) {
+		this.oline_rank = oline_rank;
+	}
+
+	public String getOline_passScore() {
+		return oline_passScore;
+	}
+
+	public void setOline_passScore(String oline_passScore) {
+		this.oline_passScore = oline_passScore;
+	}
+
+	public String getOline_runScore() {
+		return oline_runScore;
+	}
+
+	public void setOline_runScore(String oline_runScore) {
+		this.oline_runScore = oline_runScore;
+	}
+
+	public String getOline_avgScore() {
+		return oline_avgScore;
+	}
+
+	public void setOline_avgScore(String oline_avgScore) {
+		this.oline_avgScore = oline_avgScore;
+	}
+
+	public String getTotalTargets() {
+		return totalTargets;
+	}
+
+	public void setTotalTargets(String totalTargets) {
+		this.totalTargets = totalTargets;
+	}
+
+	public String getAvgTargets() {
+		return avgTargets;
+	}
+
+	public void setAvgTargets(String avgTargets) {
+		this.avgTargets = avgTargets;
+	}
+	
+	
+	
 }

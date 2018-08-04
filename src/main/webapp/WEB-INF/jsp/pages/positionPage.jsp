@@ -14,7 +14,7 @@
   <body>
 	<div class="container-fluid">
 	
-	<%@include file="nav.jsp"%>
+	<%@include file="../common/nav.jsp"%>
 	
 			<div class="col-md-1">
 				<div class="menu">
@@ -35,10 +35,10 @@
 			
 			
 			<div class="col-md-11">
-				<%@include file="positionList.jsp"%>
+				<%@include file="../tables/playerTableByPosition.jsp"%>
 			</div>
 
-			<%@include file="progressBar.jsp"%>
+			<%@include file="../common/progressBar.jsp"%>
 						
 	</div>
 	

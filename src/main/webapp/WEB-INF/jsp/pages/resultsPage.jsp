@@ -14,16 +14,16 @@
   <body>
 	<div class="container-fluid">
 	
-	<%@include file="nav.jsp"%>
+	<%@include file="../common/nav.jsp"%>
 	
 	<div class="row">
 			<div class="col-md-12">
-				<%@include file="draftBoard.jsp"%>
+				<%@include file="../panels/draftBoard.jsp"%>
 			</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<%@include file="resultBoard.jsp"%>
+			<%@include file="../panels/resultBoard.jsp"%>
 		</div>
 	</div>
 			

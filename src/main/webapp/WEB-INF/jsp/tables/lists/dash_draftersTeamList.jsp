@@ -5,4 +5,4 @@
 	<td class="bye-db_drafterTeam">${player.bye}</td>
 </tr>
 
-<%@include file="modal.jsp"%>
+<%@include file="../../common/modal.jsp"%>

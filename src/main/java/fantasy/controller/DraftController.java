@@ -34,16 +34,16 @@ public class DraftController extends BaseController {
 			addAttributes(model);
 			//model.addAttribute("error", "player " + player.getPlayerName() + " is not available");
 			errorMessage = player.getPlayerName() + " is not available";
-			return "dashboardPage";
+			return "pages/dashboardPage";
 		}
 		Log.deb("Picked player: " + player.getPlayerName());
 		doBaseDraft(model, player);
-    	return draftHasCompleted() ? prepareResults(model) : mockDraftMode ? mockDraft(model) : "dashboardPage";
+    	return draftHasCompleted() ? prepareResults(model) : mockDraftMode ? mockDraft(model) : "pages/dashboardPage";
     }
 
     public String mockDraft(Model model) throws FalifaException {
     	if (currentDrafter.getName().equals("Nick J")) {
-    		return "dashboardPage";
+    		return "pages/dashboardPage";
 		}
 		Player player = new LogicHandler(currentDrafter).getAiPick();
 		doBaseDraft(model, player);
@@ -62,7 +62,7 @@ public class DraftController extends BaseController {
     	ArrayList<Drafter> orderedDrafters = new ArrayList<Drafter>(draft.getDrafters());
     	Collections.sort(orderedDrafters, new UserDraftOrderComparator());
     	model.addAttribute("drafterResults", orderedDrafters);
-    	return "resultsPage";
+    	return "pages/resultsPage";
     }
     
 	private void doBaseDraft(Model model, Player player) {

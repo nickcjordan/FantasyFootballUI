@@ -14,12 +14,12 @@
   <body>
 	<div class="container-fluid">
 	
-	<%@include file="nav.jsp"%>
+	<%@include file="../common/nav.jsp"%>
 	
 			
 			
 			<div class="col-md-12">
-				<%@include file="draftBoard.jsp"%>
+				<%@include file="../panels/draftBoard.jsp"%>
 			</div>
 						
 	</div>

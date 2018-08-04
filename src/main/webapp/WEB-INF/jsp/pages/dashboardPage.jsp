@@ -17,22 +17,22 @@
   
   
 	<div class="container-fluid">
-	<%@include file="nav.jsp"%>
+	<%@include file="../common/nav.jsp"%>
 	
 	<div class="row">
 		<div class="col-md-2">
 			<div class="center thin-text"><h3><strong>Draft Feed:</strong></h3></div>
-			<%@include file="draftFeed.jsp"%>
+			<%@include file="../tables/lists/draftFeedList.jsp"%>
 		</div>
 		
 		
 		<div class="col-md-2">
 			<div class="row">
 				<div class="center thin-text"><h3><strong>${currentDrafter.name}'s Team:</strong></h3></div>
-				<%@include file="draftersTeam.jsp"%>
+				<%@include file="../tables/dash_draftersTeamTable.jsp"%>
 			</div>
 			<div class="row">
-				<%@include file="strategyBox.jsp"%>
+				<%@include file="../panels/strategyBox.jsp"%>
 			</div>
 		</div>
 		
@@ -48,16 +48,13 @@
 			</ul>
 			<div class="tab-content" id="suggestionTableTabContent">
 				<div class="tab-pane fade active in" id="suggs" role="tabpanel" aria-labelledby="suggs-tab">
-					<%-- <c:set var="suggestionTableContent" value="${playersSortedBySuggestions}" /> --%>
-					<%@include file="suggestionTable.jsp"%>
+					<%@include file="../tables/dash_suggestionTable.jsp"%>
 				</div>
 				<div class="tab-pane fade" id="adp" role="tabpanel" aria-labelledby="adp-tab">
-					<%-- <c:set var="suggestionTableContent" value="${playersSortedByAdp}" scope="session" /> --%>
-					<%@include file="adpTable.jsp"%>
+					<%@include file="../tables/dash_adpTable.jsp"%>
 				</div>
 				<div class="tab-pane fade" id="rank" role="tabpanel" aria-labelledby="rank-tab">
-					<%-- <c:set var="suggestionTableContent" value="${playersSortedByRank}" scope="session" /> --%>
-					<%@include file="rankTable.jsp"%>
+					<%@include file="../tables/dash_rankTable.jsp"%>
 				</div>
 			</div>
 		
@@ -73,7 +70,7 @@
 		</script>
 	</c:if>
 
-	<%@include file="progressBar.jsp"%>
+	<%@include file="../common/progressBar.jsp"%>
 			
 	</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

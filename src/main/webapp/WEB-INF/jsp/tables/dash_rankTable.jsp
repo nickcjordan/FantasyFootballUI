@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="section">
-	<table class="table table-sm table-striped header-fixed dash">
+	<table class="table table-sm table-striped header-fixed dash tabbed-table">
 		<thead class="thead-inverse">
 			<tr>
 				<th class="id-suggest">Adp</th>
@@ -52,7 +52,7 @@
 					<td class="handcuff-suggest">${player.checkForHandcuff()}</td>
 				</tr>
 				
-				<%@include file="modal.jsp"%>
+				<%@include file="../common/modal.jsp"%>
 				
 			</c:forEach>
 		</tbody>

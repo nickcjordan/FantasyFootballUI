@@ -55,7 +55,7 @@
 					</c:choose>
 					
 				</tr>
-					<%@include file="modal.jsp"%>
+					<%@include file="../../common/modal.jsp"%>
 			</c:forEach>
 		</tbody>
 	</table>

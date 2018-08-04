@@ -3,6 +3,7 @@ package fantasy.model;
 import static fantasy.enums.CSVFieldMapping.PLAYER_NAME;
 import static fantasy.enums.CSVFieldMapping.TEAM_NAME;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,8 +32,14 @@ public class NFL {
 		playersById = builder.getPlayersById();
 		teams = builder.getTeams();
 		teamsById = builder.getTeamsById();
-		builder.addNotesToPlayers();
-		builder.addTagsToPlayers();
+		try {
+			builder.addNotesToPlayers();
+			builder.addTagsToPlayers();
+			builder.addOLineRankingsToPlayers();
+			builder.addTargetsToPlayers();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static HashMap<String, Player> getPlayerMap(){

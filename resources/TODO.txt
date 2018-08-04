@@ -1,4 +1,3 @@
-* add ADP and ECR tab to draft view
 * add search and select with predictive text for live draft picking other players
 * make player modal better
 
@@ -7,3 +6,4 @@
 -turn tags into tiny icons
 -add team info on team page
 -have o-line rankings
+-put line after the Xth player (next pick)

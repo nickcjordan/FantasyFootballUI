@@ -48,7 +48,7 @@
 					<td class="handcuff-posList">${player.checkForHandcuff()}</td>
 				</tr>
 				
-				<%@include file="modal.jsp"%>
+				<%@include file="../common/modal.jsp"%>
 				
 			</c:forEach>
 		</tbody>

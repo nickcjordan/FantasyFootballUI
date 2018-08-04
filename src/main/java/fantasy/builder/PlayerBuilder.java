@@ -23,10 +23,10 @@ public class PlayerBuilder {
 	}
 	
 	public static void addNote(List<String> split) {
-		if (split.size() > 5) {
+		if (split.size() > 1) {
 			try {
-				Player p = NFL.getPlayer(split);
-				p.setNotes(buildNotes(split, 5));
+				Player p = NFL.getPlayer(split.get(0));
+				p.setNotes(buildNotes(split, 1));
 			} catch (Exception e) {
 				Log.err("ERROR could not add notes: PlayerBuilder.addnote() :: " + split.get(0) + "\n");
 				e.printStackTrace();
@@ -70,6 +70,23 @@ public class PlayerBuilder {
 	public static void addTag(List<String> split) throws FalifaException {
 		Player player = NFL.getPlayer(split.get(0));
 		player.setTags(player.getTags()+split.get(1));
+	}
+
+	public static void addOLineRankings(List<String> split) {
+		Player player = NFL.getPlayer(split.get(0));
+		player.setOline_rank(split.get(1));
+		player.setOline_passScore(split.get(2));
+		player.setOline_runScore(split.get(3));
+		player.setOline_avgScore(split.get(4));
+	}
+
+	public static void addPlayerTargets(List<String> split) {
+		Player player = NFL.getPlayer(split.get(0));
+		if (player.getPlayerName().equals("Mark Ingram") || split.get(0).equals("Mark Ingram")) {
+			System.out.println();
+		}
+		player.setTotalTargets(split.get(1));
+		player.setAvgTargets(split.get(2));
 	}
 
 }
