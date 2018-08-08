@@ -75,14 +75,9 @@ public class DraftController extends BaseController {
 	}
     
 	private int resolvePlayerId(String playerId) {
-		int id = 0;
 		LogicHandler logic = new LogicHandler(currentDrafter);
 		int blankId = currentDrafter.getName().equals("Nick J") ? logic.getMySuggestions().get(0).getId() : logic.getAiPick().getId();
-		id = (playerId.isEmpty()) ? blankId:  Integer.parseInt(playerId);
-		if (playerId.isEmpty()) {
-			
-		}
-		return id;
+		return (playerId.isEmpty()) ? blankId:  Integer.parseInt(playerId);
 	}
 
 	private void addAttributes(Model model) {
@@ -100,6 +95,7 @@ public class DraftController extends BaseController {
         model.addAttribute("draftPicks", draftPicks);
       	model.addAttribute("drafters", getCorrectlyOrderedDrafterList());
       	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
+      	model.addAttribute("draftersPickNumberList", new LogicHandler(currentDrafter).getDraftPickIndexList());
         for (Position position : Position.values()) {
         	model.addAttribute(position.getAbbrev() + "List", NFL.getAvailablePlayersByPositionAsList(position));
         }

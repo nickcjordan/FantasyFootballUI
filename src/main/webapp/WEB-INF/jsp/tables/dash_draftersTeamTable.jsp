@@ -8,6 +8,7 @@
 				<th class="name-db_drafterTeam">Name</th>
 				<th class="team-db_drafterTeam">Team</th>
 				<th class="bye-db_drafterTeam">Bye</th>
+				<th class="pos-db_drafterTeam">Pos/Ovr</th>
 			</tr>
 		</thead>
 		<tbody>

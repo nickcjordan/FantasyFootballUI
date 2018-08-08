@@ -12,6 +12,7 @@ import fantasy.enums.DraftType;
 import fantasy.enums.Position;
 import fantasy.exception.FalifaException;
 import fantasy.io.StatsCleaner;
+import fantasy.logic.LogicHandler;
 import fantasy.model.Draft;
 import fantasy.model.NFL;
 
@@ -59,12 +60,13 @@ public class HomeController extends BaseController {
 		model.addAttribute("playerList", NFL.getAllAvailablePlayersByADP());
 		model.addAttribute("currentDraftedTeam", currentDrafter.getDraftedTeam());
       	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
+      	model.addAttribute("draftersPickNumberList", new LogicHandler(currentDrafter).getDraftPickIndexList());
 		for (Position position : Position.values()) {
 			model.addAttribute("drafted" + position.getAbbrev(), currentDrafter.getDraftedTeam().getPlayersByPosition(position)); 
 			model.addAttribute(position.getAbbrev() + "List", NFL.getAvailablePlayersByPositionAsList(position));
 		}
         DraftController c = new DraftController();
-        return (draftType.equals(DraftType.AUTO_DRAFT)) ? c.autoDraft(model) : (draftType.equals(DraftType.MOCK_DRAFT ))  ? c.mockDraft(model) : "dashboardPage";
+        return (draftType.equals(DraftType.AUTO_DRAFT)) ? c.autoDraft(model) : (draftType.equals(DraftType.MOCK_DRAFT ))  ? c.mockDraft(model) : "pages/dashboardPage";
     }
 
 }

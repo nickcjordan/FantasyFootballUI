@@ -5,6 +5,7 @@
 			<tr>
 				<th class="id-suggest">Adp</th>
 				<th class="name-suggest">Name</th>
+				<th class="tags-suggest">Tags</th>
 				<th class="pos-suggest">Pos</th>
 				<th class="pos_rank-suggest">Rnk</th>
 				<th class="team-suggest">Team</th>
@@ -22,16 +23,31 @@
 		</thead>
 		
 		<tbody class="scaled-body">
-			<c:forEach items="${playersSortedBySuggestions}" var="player">
-			
-				
+			<%-- <c:forEach items="${playersSortedBySuggestions}" var="player" varStatus="status"> --%>
+			<c:set var="pickIndex" value="${0}" scope="application"/>
+			<c:forEach items="${playerListContent}" var="player" varStatus="status">
+				<c:choose><c:when test="${draftersPickNumberList.size() > pickIndex && draftersPickNumberList.get(pickIndex) == (status.index + pickNumber)}">
+					<c:set var="pickIndex" value="${pickIndex + 1}" scope="application"/>
+					<tr class="center table-divider"><td><b>Your Next Pick</b></td><td><b>Your Next Pick</b></td><td><b>Your Next Pick</b></td><td><b>Your Next Pick</b></td></tr>
+				</c:when></c:choose>
 				<tr class="tier${player.tier}">
 					<td class="id-suggest">
 						<a href="/pickPlayer?playerId=${player.id}">
 				        	<span class="badge-adp">${player.adp}</span>
 			      		</a>
 					</td>
-					<td class="name-suggest"><a class="nameLink" data-toggle="modal" data-target="#${player.id}playerModal"><strong>${player.getNameAndTags()}</strong></a></td>
+					<td class="name-suggest"><a class="nameLink" data-toggle="modal" data-target="#${player.id}playerModal"><strong>${player.playerName}</strong></a></td>
+					<td class="tags-suggest">
+						<c:choose>
+							<c:when test="${player.icons==null}">&nbsp;</c:when>
+							<c:otherwise>
+								<c:forEach items="${player.icons}" var="icon">
+									<span class="${icon}" aria-hidden="true"></span>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</td>
+					
 					<td class="pos-suggest">
 						<c:choose>
 							<c:when test="${player.pos.equals('QB')}"><span class="badge badge-warning">${player.pos} ${player.pos_rank}</span></c:when>

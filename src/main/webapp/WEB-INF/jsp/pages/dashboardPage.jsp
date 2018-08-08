@@ -38,8 +38,6 @@
 		
 		
 		<div class="col-md-8">
-			<!-- <div class="center thin-text"><h3><strong>Suggested Available Players:</strong></h3></div> -->
-			
 			<ul class="nav nav-tabs all-suggestion-tabs" id="suggestionTableTab" role="tablist">
 				<li class="nav-item active suggestion-tab"><a class="nav-link suggestion-link" id="suggs-tab" data-toggle="tab" href="#suggs" role="tab" aria-controls="suggs" aria-selected="true">Suggestions</a></li>
 				<li class="nav-item suggestion-tab"><a class="nav-link suggestion-link" id="adp-tab" data-toggle="tab" href="#adp" role="tab" aria-controls="adp" aria-selected="false">ADP</a></li>
@@ -48,18 +46,18 @@
 			</ul>
 			<div class="tab-content" id="suggestionTableTabContent">
 				<div class="tab-pane fade active in" id="suggs" role="tabpanel" aria-labelledby="suggs-tab">
+					<c:set var="playerListContent" value="${playersSortedBySuggestions}" scope="application"></c:set>
 					<%@include file="../tables/dash_suggestionTable.jsp"%>
 				</div>
 				<div class="tab-pane fade" id="adp" role="tabpanel" aria-labelledby="adp-tab">
-					<%@include file="../tables/dash_adpTable.jsp"%>
+					<c:set var="playerListContent" value="${playersSortedByAdp}" scope="application"></c:set>
+					<%@include file="../tables/dash_suggestionTable.jsp"%>
 				</div>
 				<div class="tab-pane fade" id="rank" role="tabpanel" aria-labelledby="rank-tab">
-					<%@include file="../tables/dash_rankTable.jsp"%>
+					<c:set var="playerListContent" value="${playersSortedByRank}" scope="application"></c:set>
+					<%@include file="../tables/dash_suggestionTable.jsp"%>
 				</div>
 			</div>
-		
-			<!-- END EDITING -->
-
 	</div>
 </div>
 

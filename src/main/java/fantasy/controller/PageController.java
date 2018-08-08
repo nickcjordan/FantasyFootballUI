@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fantasy.Log;
 import fantasy.enums.Position;
 import fantasy.exception.FalifaException;
+import fantasy.logic.LogicHandler;
 import fantasy.model.Drafter;
 import fantasy.model.NFL;
 import fantasy.model.Team;
@@ -87,6 +88,7 @@ public class PageController extends BaseController {
 		}
     	model.addAttribute("drafters", DraftController.getCorrectlyOrderedDrafterList());
       	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
+      	model.addAttribute("draftersPickNumberList", new LogicHandler(currentDrafter).getDraftPickIndexList());
 		return "pages/dashboardPage";
     }
     

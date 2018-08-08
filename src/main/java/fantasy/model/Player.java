@@ -50,7 +50,10 @@ public class Player {
 	String oline_avgScore;
 	String totalTargets;
 	String avgTargets;
-
+	String picLink;
+	String smallPicLink;
+	String picLocation;
+	ArrayList<String> icons;
 	
 	public Player(List<String> split) {
 		this.rank = split.get(RANK.getIndex());
@@ -71,6 +74,38 @@ public class Player {
 		this.tier = setTier();
 	}
 	
+	public ArrayList<String> getIcons() {
+		return icons;
+	}
+
+	public void setIcons(ArrayList<String> icons) {
+		this.icons = icons;
+	}
+
+	public String getPicLocation() {
+		return picLocation;
+	}
+
+	public void setPicLocation(String picLocation) {
+		this.picLocation = picLocation;
+	}
+
+	public String getPicLink() {
+		return picLink;
+	}
+
+	public void setPicLink(String picLink) {
+		this.picLink = picLink;
+	}
+
+	public String getSmallPicLink() {
+		return smallPicLink;
+	}
+
+	public void setSmallPicLink(String smallPicLink) {
+		this.smallPicLink = smallPicLink;
+	}
+
 	private String getRealName(List<String> split) {
 		return (split.get(POS.getIndex()).contains("D")) ? split.get(TEAM_NAME.getIndex()) : split.get(PLAYER_NAME.getIndex());
 	}

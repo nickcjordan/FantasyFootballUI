@@ -1,10 +1,10 @@
 package fantasy.builder;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.util.StringUtils;
-
 import fantasy.Log;
+import fantasy.enums.Tag;
 import fantasy.exception.FalifaException;
 import fantasy.model.NFL;
 import fantasy.model.Player;
@@ -69,7 +69,13 @@ public class PlayerBuilder {
 
 	public static void addTag(List<String> split) throws FalifaException {
 		Player player = NFL.getPlayer(split.get(0));
-		player.setTags(player.getTags()+split.get(1));
+		String newTags = player.getTags()+split.get(1);
+		player.setTags(newTags);
+		ArrayList<String> tags = new ArrayList<String>();
+		for (int i = 0; i < newTags.length(); i++) {
+			tags.add(Tag.getIconClassFromTag(newTags.charAt(i)));
+		}
+		player.setIcons(tags);
 	}
 
 	public static void addOLineRankings(List<String> split) {
@@ -82,11 +88,16 @@ public class PlayerBuilder {
 
 	public static void addPlayerTargets(List<String> split) {
 		Player player = NFL.getPlayer(split.get(0));
-		if (player.getPlayerName().equals("Mark Ingram") || split.get(0).equals("Mark Ingram")) {
-			System.out.println();
-		}
 		player.setTotalTargets(split.get(1));
 		player.setAvgTargets(split.get(2));
+	}
+
+	public static void addPlayerPicLinks(List<String> split) {
+		Player player = NFL.getPlayer(split.get(0));
+		player.setPicLink(split.get(1));
+		player.setSmallPicLink(split.get(2));
+		String path = "/images/players/" + player.getPlayerName().replace(" ", "_") + "_photo.jpg";
+		player.setPicLocation(path);
 	}
 
 }

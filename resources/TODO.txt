@@ -3,7 +3,4 @@
 
 -add in expert rankings back to calculation somehow
 -bold player name if it is a backup to someone you already have 
--turn tags into tiny icons
 -add team info on team page
--have o-line rankings
--put line after the Xth player (next pick)

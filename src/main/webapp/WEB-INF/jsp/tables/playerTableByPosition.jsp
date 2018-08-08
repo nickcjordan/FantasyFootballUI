@@ -23,7 +23,7 @@
 				<tr>
 					<td class="id-posList">
 						<a href="/pickPlayer?playerId=${player.id}">
-				        	<span class="badge-adp-players">${player.adp}</span>
+				        	<span class="badge-adp-players">${player.rank}</span>
 			      		</a>
 					</td>
 					<td class="name-posList"><a class="nameLink" data-toggle="modal" data-target="#${player.id}playerModal"><strong>${player.getNameAndTags()}</strong></a></td>

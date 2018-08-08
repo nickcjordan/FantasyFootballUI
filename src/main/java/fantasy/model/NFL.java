@@ -37,6 +37,7 @@ public class NFL {
 			builder.addTagsToPlayers();
 			builder.addOLineRankingsToPlayers();
 			builder.addTargetsToPlayers();
+			builder.addPictureLinksToPlayers();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -128,7 +129,7 @@ public class NFL {
 	public static Player getPlayer(String p) {
 		Player player = players.get(p);
 		if (player == null) {
-			Log.err("Player " + p + " not found in players map");
+			throw new RuntimeException("Player " + p + " not found in players map");
 		}
 		return player;
 	}

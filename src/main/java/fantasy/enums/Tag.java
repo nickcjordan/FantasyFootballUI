@@ -4,22 +4,24 @@ import fantasy.model.Player;
 
 public enum Tag {
 
-	RISK("!", 0),
-	SLEEPER("$", 2),
-	ROOKIE("R", 1),
-	NEW_TEAM("@", 0),
-	FAVORITE("*", 3),
-	RISING("+", 1),
-	FALLING("-", -1),
-	INJURY_RISK("i", -1),
-	BUST("B", -2);
+	RISK("!", 0, "glyphicon glyphicon-exclamation-sign"),
+	SLEEPER("$", 2, "glyphicon glyphicon-usd"),
+	ROOKIE("R", 1, "glyphicon glyphicon-registration-mark"),
+	NEW_TEAM("@", 0, "glyphicon glyphicon-share-alt"),
+	FAVORITE("*", 3, "glyphicon glyphicon-thumbs-up"),
+	RISING("+", 1, "glyphicon glyphicon-arrow-up"),
+	FALLING("-", -1, "glyphicon glyphicon-arrow-down"),
+	INJURY_RISK("i", -1, "glyphicon glyphicon-wrench"),
+	BUST("B", -2, "glyphicon glyphicon-ban-circle");
 	
 	private String tag;
 	private int shift;
+	private String icon;
 	
-	Tag(String tag, int shift) {
+	Tag(String tag, int shift, String icon) {
 		this.tag = tag;
 		this.shift = shift;
+		this.setIcon(icon);
 	}
 
 	public String getTag() {
@@ -72,6 +74,23 @@ public enum Tag {
 	
 	public static boolean isInjuryRisk(Player player) {
 		return player.getTags().contains(INJURY_RISK.getTag());
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+	
+	public static String getIconClassFromTag(char c) {
+		for (Tag t : Tag.values()) {
+			if (t.getTag().equals(String.valueOf(c))) {
+				return t.getIcon();
+			}
+		}
+		return "";
 	}
 	
 }

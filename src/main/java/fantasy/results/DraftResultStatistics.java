@@ -32,7 +32,7 @@ public class DraftResultStatistics {
 		try { 
 			Player handcuff = NFL.getPlayer(rbs.get(0).getHandcuff());
 			return ((handcuff != null) && (rbs.contains(handcuff)));
-		} catch (FalifaException e) {return false;}
+		} catch (Exception e) {return false;}
 	}
 
 	private int findAverageOverallRank(List<List<Player>> positions) {

@@ -66,14 +66,14 @@ public class NFLBuilder {
 			try {
 				PlayerBuilder.addNote(split);
 			} catch (Exception e) {
-				Log.err("Could not add notes : " + e.getMessage());
+				Log.err("Could not add notes for " + e.getMessage());
 			}
 		}
 		for (List<String> split : dataReader.getSplitLinesFromFile("resources/nicks_notes.csv")) {
 			try {
 				PlayerBuilder.addAdditionalNote(split);
 			} catch (Exception e) {
-				Log.err("Could not add notes : " + e.getMessage());
+				Log.err("Could not add notes for " + e.getMessage());
 			}
 		}
 	}
@@ -83,7 +83,7 @@ public class NFLBuilder {
 			try {
 				PlayerBuilder.addTag(split);
 			} catch (Exception e) {
-				Log.err("Could not set tags: " + split.get(0));
+				Log.err("Could not set tags for " + split.get(0) + " :: " + e.getMessage());
 			}
 		}
 	}
@@ -109,7 +109,7 @@ public class NFLBuilder {
 			try {
 				PlayerBuilder.addOLineRankings(split);
 			} catch (Exception e) {
-				Log.err("Could not set o line rank: " + split.get(0));
+				Log.err("Could not set o line rank for " + split.get(0) + " :: " + e.getMessage());
 			}
 		}
 	}
@@ -119,7 +119,17 @@ public class NFLBuilder {
 			try {
 				PlayerBuilder.addPlayerTargets(split);
 			} catch (Exception e) {
-				Log.err("Could not set targets: " + split.get(0));
+				Log.err("Could not set targets for " + split.get(0) + " :: " + e.getMessage());
+			}
+		}
+	}
+
+	public void addPictureLinksToPlayers() throws FileNotFoundException {
+		for (List<String> split : dataReader.getSplitLinesFromFile("resources/playerPics.csv")) {
+			try {
+				PlayerBuilder.addPlayerPicLinks(split);
+			} catch (Exception e) {
+				Log.err("Could not set picture links for " + split.get(0) + " :: " + e.getMessage());
 			}
 		}
 	}

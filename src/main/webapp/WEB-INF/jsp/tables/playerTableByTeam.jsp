@@ -6,7 +6,7 @@
 				<tr>
 					<th class="id-3">ID</th>
 					<th class="name-3">Name</th>
-					<th class="pos_rank-3">Pos/Rnk</th>
+					<th class="pos_rank-3">Pos/Ovr</th>
 					<th class="team-3">Team</th>
 					<th class="bye-3">Bye</th>
 					<th class="handcuff-3">Backups</th>
