@@ -42,4 +42,20 @@ public class DataFileReader {
 		return splitLine;
 	}
 
+	public List<String> getLinesFromFile(String fileName) throws FileNotFoundException {
+		List<String> names = new ArrayList<String>();
+		Scanner scanner = new Scanner(new File(fileName));
+		if (scanner.hasNextLine()) {
+			scanner.nextLine(); //move past header
+		}
+		while(scanner.hasNextLine()){
+			String line = scanner.nextLine();
+			if ((!StringUtils.isEmpty(line)) && (!line.equals("\"\""))){
+				names.add(line);
+			}
+		}
+		scanner.close();
+		return names;
+	}
+
 }

@@ -47,7 +47,7 @@ public class NFLBuilder {
 				TeamBuilder.addPlayerToTeam(player, teams.get(player.getTeamName()));
 				playersById.put(player.getId(), player);
 			} catch (Exception e) {
-				e.printStackTrace();
+				Log.err("ERROR adding player to players list: " + split.get(CSVFieldMapping.PLAYER_NAME.getIndex()));
 			}
 		}
 	}
@@ -130,6 +130,16 @@ public class NFLBuilder {
 				PlayerBuilder.addPlayerPicLinks(split);
 			} catch (Exception e) {
 				Log.err("Could not set picture links for " + split.get(0) + " :: " + e.getMessage());
+			}
+		}
+	}
+
+	public void setPlayersToTarget() throws FileNotFoundException {
+		for (String name : dataReader.getLinesFromFile("resources/playersToTarget.csv")) {
+			try {
+				PlayerBuilder.setPlayerAsATarget(name);
+			} catch (Exception e) {
+				Log.err("Could not set player as a target: " + name + " :: " + e.getMessage());
 			}
 		}
 	}

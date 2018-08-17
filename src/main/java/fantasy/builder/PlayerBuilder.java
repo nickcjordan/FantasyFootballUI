@@ -29,7 +29,6 @@ public class PlayerBuilder {
 				p.setNotes(buildNotes(split, 1));
 			} catch (Exception e) {
 				Log.err("ERROR could not add notes: PlayerBuilder.addnote() :: " + split.get(0) + "\n");
-				e.printStackTrace();
 			}
 		}
 	}
@@ -98,6 +97,11 @@ public class PlayerBuilder {
 		player.setSmallPicLink(split.get(2));
 		String path = "/images/players/" + player.getPlayerName().replace(" ", "_") + "_photo.jpg";
 		player.setPicLocation(path);
+	}
+
+	public static void setPlayerAsATarget(String name) {
+		Player player = NFL.getPlayer(name);
+		player.setAsPlayerToTarget();
 	}
 
 }

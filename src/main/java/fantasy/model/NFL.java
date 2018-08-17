@@ -38,6 +38,7 @@ public class NFL {
 			builder.addOLineRankingsToPlayers();
 			builder.addTargetsToPlayers();
 			builder.addPictureLinksToPlayers();
+			builder.setPlayersToTarget();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -23,20 +23,41 @@
 		</thead>
 		
 		<tbody class="scaled-body">
-			<%-- <c:forEach items="${playersSortedBySuggestions}" var="player" varStatus="status"> --%>
 			<c:set var="pickIndex" value="${0}" scope="application"/>
 			<c:forEach items="${playerListContent}" var="player" varStatus="status">
-				<c:choose><c:when test="${draftersPickNumberList.size() > pickIndex && draftersPickNumberList.get(pickIndex) == (status.index + pickNumber)}">
-					<c:set var="pickIndex" value="${pickIndex + 1}" scope="application"/>
-					<tr class="center table-divider"><td><b>Your Next Pick</b></td><td><b>Your Next Pick</b></td><td><b>Your Next Pick</b></td><td><b>Your Next Pick</b></td></tr>
-				</c:when></c:choose>
+				<!-- set next pick number divider bar -->
+				<c:choose>
+					<c:when test="${draftersPickNumberList.size() > pickIndex && draftersPickNumberList.get(pickIndex) == (status.index + pickNumber)}">
+						<c:set var="pickIndex" value="${pickIndex + 1}" scope="application"/>
+						<tr class="center table-divider"><td><b>Your Next Pick</b></td><td><b>Your Next Pick</b></td><td><b>Your Next Pick</b></td><td><b>Your Next Pick</b></td></tr>
+					</c:when>
+				</c:choose>
 				<tr class="tier${player.tier}">
 					<td class="id-suggest">
 						<a href="/pickPlayer?playerId=${player.id}">
 				        	<span class="badge-adp">${player.adp}</span>
 			      		</a>
 					</td>
-					<td class="name-suggest"><a class="nameLink" data-toggle="modal" data-target="#${player.id}playerModal"><strong>${player.playerName}</strong></a></td>
+					<td class="name-suggest">
+						<a class="nameLink" data-toggle="modal" data-target="#${player.id}playerModal">
+							<c:choose>
+								<c:when test="${currentDrafter.hasStarterOfPlayer(player)}">
+									<c:choose>
+										<c:when test="${player.isPlayerToTarget()}">
+											<span class="handcuff-player-text"><strong>${player.playerName}</strong></span>
+										</c:when>
+										<c:otherwise><span class="handcuff-player-text">${player.playerName}</span></c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${player.isPlayerToTarget()}"><strong>${player.playerName}</strong></c:when>
+										<c:otherwise>${player.playerName}</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+						</a>
+					</td>
 					<td class="tags-suggest">
 						<c:choose>
 							<c:when test="${player.icons==null}">&nbsp;</c:when>

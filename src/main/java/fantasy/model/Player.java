@@ -54,6 +54,7 @@ public class Player {
 	String smallPicLink;
 	String picLocation;
 	ArrayList<String> icons;
+	boolean isPlayerToTarget;
 	
 	public Player(List<String> split) {
 		this.rank = split.get(RANK.getIndex());
@@ -107,14 +108,16 @@ public class Player {
 	}
 
 	private String getRealName(List<String> split) {
-		return (split.get(POS.getIndex()).contains("D")) ? split.get(TEAM_NAME.getIndex()) : split.get(PLAYER_NAME.getIndex());
+		return split.get(PLAYER_NAME.getIndex());
+//		return (split.get(POS.getIndex()).contains("D")) ? split.get(TEAM_NAME.getIndex()) : split.get(PLAYER_NAME.getIndex());
 	}
 
 	private static String extractTeamName(List<String> split) {
 		String name = split.get(TEAM_NAME.getIndex());
 		if (StringUtils.isEmpty(name) || name.equals("NA") || name.equals("-")) {
 			String[] splitText = split.get(PLAYER_NAME.getIndex()).split(" ");
-			split.set(TEAM_NAME.getIndex(), splitText[splitText.length - 1]); // "Dallas Cowboys" --> split.set("Cowboys")
+			String edit = splitText[splitText.length - 1].replace("(", "").replace(")", "");
+			split.set(TEAM_NAME.getIndex(), edit); // "Dallas (DAL)" --> split.set("DAL")
 		}
 		return split.get(TEAM_NAME.getIndex());
 	}
@@ -454,6 +457,12 @@ public class Player {
 		this.avgTargets = avgTargets;
 	}
 	
+	public void setAsPlayerToTarget() {
+		this.isPlayerToTarget = true;
+	}
 	
+	public boolean isPlayerToTarget() {
+		return this.isPlayerToTarget;
+	}
 	
 }

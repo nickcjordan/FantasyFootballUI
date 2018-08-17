@@ -30,8 +30,12 @@ public class StatsCleaner {
 //			while((line = in.readLine()) != null) {
 //				if (line.startsWith("#")) { continue; }
 			for (List<String> split : dataReader.getSplitLinesFromFile("resources/tags.csv")) {
-				Player p = NFL.getPlayer(split.get(0));
-				sorted.add(p);
+				try {
+					Player p = NFL.getPlayer(split.get(0));
+					sorted.add(p);
+				} catch (Exception e) {
+					Log.err("ERROR when cleaning up tags :: Player not found in NFL player list: " + split.get(0));
+				}
 			}
 			
 		    BufferedWriter out = new BufferedWriter(new FileWriter("resources/tags.csv"));

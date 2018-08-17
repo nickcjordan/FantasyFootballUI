@@ -1,6 +1,8 @@
-* add search and select with predictive text for live draft picking other players
-* make player modal better
-
+-add search and select with predictive text for live draft picking other players
 -add in expert rankings back to calculation somehow
 -bold player name if it is a backup to someone you already have 
 -add team info on team page
+
+-automate downloading new stats
+-integrate data retrieval service from NewFantasy
+-automate tier range numbers in properties

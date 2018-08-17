@@ -1290,3 +1290,7 @@ html, body {
 .no-pad {
 	padding: 0px;
 }
+
+.handcuff-player-text {
+	text-decoration: underline;
+}
