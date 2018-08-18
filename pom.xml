@@ -48,6 +48,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
 
 		<!-- Need this to compile JSP -->
@@ -170,7 +171,7 @@
 						<configuration>
 							<classifier>spring-boot</classifier>
 							<mainClass>
-								org.baeldung.executable.ExecutableMavenJar
+								fantasy.DraftLauncher
 							</mainClass>
 						</configuration>
 					</execution>

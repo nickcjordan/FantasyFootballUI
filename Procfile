@@ -1,1 +1,1 @@
-web: java -jar target/fantasy-gui-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+spring-boothe: java -jar target/fantasy-gui-0.0.1-SNAPSHOT-jar-with-dependencies.jar
