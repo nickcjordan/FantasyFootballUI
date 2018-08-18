@@ -12,7 +12,7 @@
 	<groupId>fantasy.gui</groupId>
 	<artifactId>fantasy-gui</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>FantasyUI</name>
 	<url>http://maven.apache.org</url>
