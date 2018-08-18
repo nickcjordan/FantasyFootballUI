@@ -37,7 +37,7 @@ public class NFLBuilder {
 	}
 
 	private void addPlayersToPlayerLists() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("resources/master_players.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/master_players.csv")) {
 			if (split.get(CSVFieldMapping.POS.getIndex()).contains("TOL")) { // TOL == Total Offensive Line?
 				continue;
 			}
@@ -53,7 +53,7 @@ public class NFLBuilder {
 	}
 
 	private void addTeamsToTeamLists() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("resources/team_names.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/team_names.csv")) {
 			Team team = TeamBuilder.buildTeamFromInput(split);
 			teams.put(team.getName(), team);
 			teams.put(team.getAbbrev(), team);
@@ -62,14 +62,14 @@ public class NFLBuilder {
 	}
 
 	public void addNotesToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("resources/FantasyPros_notes.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/FantasyPros_notes.csv")) {
 			try {
 				PlayerBuilder.addNote(split);
 			} catch (Exception e) {
 				Log.err("Could not add notes for " + e.getMessage());
 			}
 		}
-		for (List<String> split : dataReader.getSplitLinesFromFile("resources/nicks_notes.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/nicks_notes.csv")) {
 			try {
 				PlayerBuilder.addAdditionalNote(split);
 			} catch (Exception e) {
@@ -79,7 +79,7 @@ public class NFLBuilder {
 	}
 
 	public void addTagsToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("resources/tags.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/tags.csv")) {
 			try {
 				PlayerBuilder.addTag(split);
 			} catch (Exception e) {
@@ -105,7 +105,7 @@ public class NFLBuilder {
 	}
 
 	public void addOLineRankingsToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("resources/o-line_to_player_rankings.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/o-line_to_player_rankings.csv")) {
 			try {
 				PlayerBuilder.addOLineRankings(split);
 			} catch (Exception e) {
@@ -115,7 +115,7 @@ public class NFLBuilder {
 	}
 
 	public void addTargetsToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("resources/targets.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/targets.csv")) {
 			try {
 				PlayerBuilder.addPlayerTargets(split);
 			} catch (Exception e) {
@@ -125,7 +125,7 @@ public class NFLBuilder {
 	}
 
 	public void addPictureLinksToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("resources/playerPics.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/playerPics.csv")) {
 			try {
 				PlayerBuilder.addPlayerPicLinks(split);
 			} catch (Exception e) {
@@ -135,7 +135,7 @@ public class NFLBuilder {
 	}
 
 	public void setPlayersToTarget() throws FileNotFoundException {
-		for (String name : dataReader.getLinesFromFile("resources/playersToTarget.csv")) {
+		for (String name : dataReader.getLinesFromFile("src/main/resources/data/playersToTarget.csv")) {
 			try {
 				PlayerBuilder.setPlayerAsATarget(name);
 			} catch (Exception e) {
