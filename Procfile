@@ -1,1 +1,1 @@
-web: mvn spring-boot:run
+web: java -jar target/fantasy-gui-0.0.1-SNAPSHOT-jar-with-dependencies.jar
