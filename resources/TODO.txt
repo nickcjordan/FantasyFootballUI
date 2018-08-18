@@ -1,6 +1,4 @@
 -add search and select with predictive text for live draft picking other players
--add in expert rankings back to calculation somehow
--bold player name if it is a backup to someone you already have 
 -add team info on team page
 
 -automate downloading new stats
