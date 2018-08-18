@@ -41,12 +41,13 @@ public class BaseController {
 	public static String errorMessage = null;
 	
 	public static Map<String, RoundSpecificStrategy> strategyByRound;
+	public static List<Player> currentRoundHandcuffs;
 	
 	
 	static {
 		Properties prop = new Properties();
 		try {
-    		prop.load(new FileInputStream(new File("logic.properties")));
+    		prop.load(new FileInputStream(new File("src/main/resources/data/logic.properties")));
     		strategyByRound = getStrategyFromFile();
     	} catch (IOException ex) {
     		Log.err("Error pulling data from file");
@@ -65,7 +66,7 @@ public class BaseController {
 	
 	private static Map<String, RoundSpecificStrategy> getStrategyFromFile() throws FileNotFoundException {
 		Map<String, RoundSpecificStrategy> map = new HashMap<String, RoundSpecificStrategy>();
-		for (List<String> split : new DataFileReader().getSplitLinesFromFile("resources/draftStrategyByRound.csv")) {
+		for (List<String> split : new DataFileReader().getSplitLinesFromFile("src/main/resources/data/draftStrategyByRound.csv")) {
 			RoundSpecificStrategy strategy = buildStrategy(split);
 			map.put(strategy.getRound(), strategy);
 		}

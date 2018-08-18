@@ -41,7 +41,7 @@
 					<td class="name-suggest">
 						<a class="nameLink" data-toggle="modal" data-target="#${player.id}playerModal">
 							<c:choose>
-								<c:when test="${currentDrafter.hasStarterOfPlayer(player)}">
+								<c:when test="${currentRoundHandcuffs.contains(player)}">
 									<c:choose>
 										<c:when test="${player.isPlayerToTarget()}">
 											<span class="handcuff-player-text"><strong>${player.playerName}</strong></span>

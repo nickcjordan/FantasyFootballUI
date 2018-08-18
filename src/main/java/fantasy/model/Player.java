@@ -55,6 +55,7 @@ public class Player {
 	String picLocation;
 	ArrayList<String> icons;
 	boolean isPlayerToTarget;
+	boolean isHandcuff;
 	
 	public Player(List<String> split) {
 		this.rank = split.get(RANK.getIndex());
@@ -75,6 +76,14 @@ public class Player {
 		this.tier = setTier();
 	}
 	
+	public boolean isHandcuff() {
+		return isHandcuff;
+	}
+
+	public void setAsHandcuff() {
+		this.isHandcuff =true;
+	}
+
 	public ArrayList<String> getIcons() {
 		return icons;
 	}
@@ -82,8 +91,7 @@ public class Player {
 	public void setIcons(ArrayList<String> icons) {
 		this.icons = icons;
 	}
-
-	public String getPicLocation() {
+	public String getPicLocation() {
 		return picLocation;
 	}
 

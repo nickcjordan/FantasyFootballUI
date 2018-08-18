@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fantasy.Log;
+import fantasy.builder.PlayerBuilder;
 import fantasy.builder.TeamBuilder;
 import fantasy.comparator.DraftSelectionOrderComparator;
 import fantasy.comparator.UserDraftOrderComparator;
@@ -29,14 +30,13 @@ public class DraftController extends BaseController {
     public String doPickForDrafter(@RequestParam(defaultValue="") String playerId, Model model) throws FalifaException {
 		errorMessage = null;
 		Player player = NFL.getPlayer(resolvePlayerId(playerId));
+		Log.deb("doPickForDrafter :: picking player " + player.getPlayerName());
 		if (!player.isAvailable()) {
 			Log.err("doPickForDrafter : " + currentDrafter.getName() + " :: player " + player.getPlayerName() + " is not available");
 			addAttributes(model);
-			//model.addAttribute("error", "player " + player.getPlayerName() + " is not available");
 			errorMessage = player.getPlayerName() + " is not available";
 			return "pages/dashboardPage";
 		}
-		Log.deb("Picked player: " + player.getPlayerName());
 		doBaseDraft(model, player);
     	return draftHasCompleted() ? prepareResults(model) : mockDraftMode ? mockDraft(model) : "pages/dashboardPage";
     }
@@ -67,13 +67,26 @@ public class DraftController extends BaseController {
     
 	private void doBaseDraft(Model model, Player player) {
 		Log.info("Player picked = " + player.getPlayerName());
+		PlayerBuilder.setHandcuffsForSelectedPlayer(player);
 		draftPicks.add(draftPlayer(currentDrafter, player));
 		Collections.sort(draftPicks, new DraftSelectionOrderComparator());
 		checkIfEndOfRound();
 		moveToNextDrafter();
+		setCorrectHandcuffsForCurrentDrafter();
         addAttributes(model);
 	}
     
+	private void setCorrectHandcuffsForCurrentDrafter() {
+		Drafter current = BaseController.currentDrafter;
+		List<Player> players = new ArrayList<Player>();
+		for (Player drafted : current.getDraftedTeam().getAllInDraftedOrder()) {
+			for (Player handcuff : drafted.getBackups()) {
+				players.add(handcuff);
+			}
+		}
+		BaseController.currentRoundHandcuffs = players;
+	}
+
 	private int resolvePlayerId(String playerId) {
 		LogicHandler logic = new LogicHandler(currentDrafter);
 		int blankId = currentDrafter.getName().equals("Nick J") ? logic.getMySuggestions().get(0).getId() : logic.getAiPick().getId();
@@ -84,6 +97,7 @@ public class DraftController extends BaseController {
 		model.addAttribute("progressPercent", getPercent());
 		model.addAttribute("draft", draft);
         model.addAttribute("currentDrafter", currentDrafter);
+        model.addAttribute("currentRoundHandcuffs", BaseController.currentRoundHandcuffs);
         
         model.addAttribute("playersSortedBySuggestions", getSuggs(currentDrafter));
 		model.addAttribute("playersSortedByAdp", NFL.getAllAvailablePlayersByADP());
@@ -113,6 +127,9 @@ public class DraftController extends BaseController {
 		draftedPlayer.setRoundDrafted(roundNum);
 		TeamBuilder.addPlayerToDraftersTeam(draftedPlayer, drafter.getDraftedTeam());
 		draftedPlayer.markUnavailable();
+		for (Player handcuff : draftedPlayer.getBackups()) {
+			handcuff.setAsHandcuff();
+		}
 		return new DraftPick(pickNumber, roundNum, drafter, draftedPlayer);
 	}
     

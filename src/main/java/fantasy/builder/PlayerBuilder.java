@@ -104,4 +104,11 @@ public class PlayerBuilder {
 		player.setAsPlayerToTarget();
 	}
 
+	public static void setHandcuffsForSelectedPlayer(Player selectedPlayer) {
+		List<Player> positionGroup = NFL.getAvailablePlayersByPositionAsList(selectedPlayer.getPosition());
+		for (Player p : positionGroup) {
+//			if (p.g) TODO
+		}
+	}
+
 }

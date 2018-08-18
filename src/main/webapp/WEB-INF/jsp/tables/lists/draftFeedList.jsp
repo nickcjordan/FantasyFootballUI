@@ -14,7 +14,7 @@
 				<tr>
 					<td class="P-num">${pick.round}.<strong>${pick.pick}</strong></td>
 					<c:choose>
-						<c:when test="${pick.drafter.name.equals('Nick J')}">
+						<c:when test="${pick.drafter.name.equals('Nick J') || pick.drafter.name.equals(currentDrafter.name)}">
 							<td class="Drafter"><b>${pick.drafter.name}</b></td>
 						</c:when>
 						<c:otherwise>
@@ -46,7 +46,7 @@
 					</c:choose>
 					
 					<c:choose>
-						<c:when test="${pick.drafter.name.equals('Nick J')}">
+						<c:when test="${pick.drafter.name.equals(currentDrafter.name)}">
 					<td class="Player"><a class="nameLink" data-toggle="modal" data-target="#${pick.player.id}playerModal"><b>${pick.player.getPlayerName()}</b></a></td>
 						</c:when>
 						<c:otherwise>
