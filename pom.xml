@@ -12,7 +12,7 @@
 	<groupId>fantasy.gui</groupId>
 	<artifactId>fantasy-gui</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>FantasyUI</name>
 	<url>http://maven.apache.org</url>
@@ -85,6 +85,17 @@
 		<plugins>
 
 			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>2.0.3</version>
+				<configuration>
+					<processTypes> 
+						<web>java -jar target/fantasy-gui-0.0.1-SNAPSHOT.war</web> 
+					</processTypes>
+				</configuration>
+			</plugin>
+
+			<!-- <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
@@ -102,7 +113,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -116,7 +126,6 @@
 					</archive>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -159,7 +168,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -170,13 +178,32 @@
 						</goals>
 						<configuration>
 							<classifier>spring-boot</classifier>
-							<mainClass>
-								fantasy.DraftLauncher
-							</mainClass>
+							<mainClass> fantasy.DraftLauncher </mainClass>
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
+			
+			 <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>1.2.3.RELEASE</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.6</version>
+            <configuration>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+        </plugin>
 
 		</plugins>
 	</build>
