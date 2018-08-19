@@ -1,6 +1,0 @@
--add search and select with predictive text for live draft picking other players
--add team info on team page
-
--automate downloading new stats
--integrate data retrieval service from NewFantasy
--automate tier range numbers in properties

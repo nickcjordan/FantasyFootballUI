@@ -6,9 +6,9 @@ import java.util.List;
 
 import fantasy.Log;
 import fantasy.comparator.PlayerADPComparator;
+import fantasy.constants.Position;
+import fantasy.constants.Tag;
 import fantasy.controller.DraftController;
-import fantasy.enums.Position;
-import fantasy.enums.Tag;
 import fantasy.model.NFL;
 import fantasy.model.Player;
 import fantasy.model.Team;

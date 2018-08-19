@@ -1,8 +1,9 @@
 package fantasy.io;
 
-import java.io.BufferedReader;
+import static fantasy.constants.DataSourcePaths.PLAYERNOTES_CUSTOM_PATH;
+import static fantasy.constants.DataSourcePaths.TAGS_CUSTOM_PATH;
+
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -23,13 +24,7 @@ public class StatsCleaner {
 	public static void cleanupTags() {
 		try {
 			TreeSet<Player> sorted = new TreeSet<Player>(new AlphabetizedPlayerComparator());
-			
-			
-//			BufferedReader in = new BufferedReader(new FileReader(("resources/tags.csv")));
-//			String line = null;
-//			while((line = in.readLine()) != null) {
-//				if (line.startsWith("#")) { continue; }
-			for (List<String> split : dataReader.getSplitLinesFromFile("resources/tags.csv")) {
+			for (List<String> split : dataReader.getSplitLinesFromFile(TAGS_CUSTOM_PATH)) {
 				try {
 					Player p = NFL.getPlayer(split.get(0));
 					sorted.add(p);
@@ -38,7 +33,7 @@ public class StatsCleaner {
 				}
 			}
 			
-		    BufferedWriter out = new BufferedWriter(new FileWriter("resources/tags.csv"));
+		    BufferedWriter out = new BufferedWriter(new FileWriter(TAGS_CUSTOM_PATH));
 		    out.write(HEADER);
 		    for (Player p : sorted) {
 		    	out.newLine();
@@ -46,8 +41,7 @@ public class StatsCleaner {
 		    }
 		    out.flush();
 		    out.close();
-		}
-		catch(IOException ex) {
+		} catch(IOException ex) {
 			Log.err(ex.getMessage());
 		}
 	}
@@ -56,11 +50,7 @@ public class StatsCleaner {
 	public static void cleanupNickNotes() {
 		try {
 			TreeSet<Player> sorted = new TreeSet<Player>(new AlphabetizedPlayerComparator());
-			
-//			BufferedReader in = new BufferedReader(new FileReader(("resources/nicks_notes.csv")));
-//			String line = null;
-//			while((line = in.readLine()) != null) {
-			for (List<String> split : dataReader.getSplitLinesFromFile("resources/nicks_notes.csv")) {
+			for (List<String> split : dataReader.getSplitLinesFromFile(PLAYERNOTES_CUSTOM_PATH)) {
 				
 				Player p = NFL.getPlayer(split.get(0));
 				try {
@@ -72,15 +62,14 @@ public class StatsCleaner {
 				sorted.add(p);
 			}
 			
-		    BufferedWriter out = new BufferedWriter(new FileWriter("resources/nicks_notes.csv"));
+		    BufferedWriter out = new BufferedWriter(new FileWriter(PLAYERNOTES_CUSTOM_PATH));
 		    for (Player p : sorted) {
 			    out.write(p.getPlayerName() + "\",\"" + p.getNickNotes());
 			    out.newLine();
 		    }
 		    out.flush();
 		    out.close();
-		}
-		catch(IOException ex) {
+		} catch(IOException ex) {
 			Log.err(ex.getMessage());
 		}
 	}

@@ -1,7 +1,7 @@
 package fantasy.model;
 
-import static fantasy.enums.CSVFieldMapping.PLAYER_NAME;
-import static fantasy.enums.CSVFieldMapping.TEAM_NAME;
+import static fantasy.constants.CSVFieldMapping.PLAYER_NAME;
+import static fantasy.constants.CSVFieldMapping.TEAM_NAME;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import fantasy.builder.NFLBuilder;
 import fantasy.comparator.AlphabetizedTeamComparator;
 import fantasy.comparator.PlayerADPComparator;
 import fantasy.comparator.PlayerRankComparator;
-import fantasy.enums.Position;
+import fantasy.constants.Position;
 
 public class NFL {
 

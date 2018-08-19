@@ -9,11 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import static fantasy.constants.DataSourcePaths.*;
 
 import org.springframework.stereotype.Controller;
 
 import fantasy.Log;
-import fantasy.enums.DraftType;
+import fantasy.constants.DraftType;
 import fantasy.io.DataFileReader;
 import fantasy.logic.LogicHandler;
 import fantasy.model.Draft;
@@ -47,7 +48,7 @@ public class BaseController {
 	static {
 		Properties prop = new Properties();
 		try {
-    		prop.load(new FileInputStream(new File("src/main/resources/data/logic.properties")));
+    		prop.load(new FileInputStream(new File(DRAFT_LOGIC_PROPERTIES_PATH)));
     		strategyByRound = getStrategyFromFile();
     	} catch (IOException ex) {
     		Log.err("Error pulling data from file");
@@ -66,7 +67,7 @@ public class BaseController {
 	
 	private static Map<String, RoundSpecificStrategy> getStrategyFromFile() throws FileNotFoundException {
 		Map<String, RoundSpecificStrategy> map = new HashMap<String, RoundSpecificStrategy>();
-		for (List<String> split : new DataFileReader().getSplitLinesFromFile("src/main/resources/data/draftStrategyByRound.csv")) {
+		for (List<String> split : new DataFileReader().getSplitLinesFromFile(DRAFTSTRATEGY_CUSTOM_PATH)) {
 			RoundSpecificStrategy strategy = buildStrategy(split);
 			map.put(strategy.getRound(), strategy);
 		}
@@ -97,7 +98,6 @@ public class BaseController {
 		}
 		percent = (((pickNumber - 1) / 192.0) * 100);
 		percent = (double)Math.round(percent * 100d) / 100d;
-		//Log.deb("Draft completion = " + percent);
 		return percent;
 	}
 	

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fantasy.Log;
-import fantasy.enums.Position;
+import fantasy.constants.Position;
 import fantasy.exception.FalifaException;
 import fantasy.logic.LogicHandler;
 import fantasy.model.Drafter;

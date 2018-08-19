@@ -1,4 +1,4 @@
-package fantasy.enums;
+package fantasy.constants;
 
 public enum CSVFieldMapping {
 	

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fantasy.Log;
-import fantasy.enums.Tag;
+import fantasy.constants.Tag;
 import fantasy.exception.FalifaException;
 import fantasy.model.NFL;
 import fantasy.model.Player;
@@ -102,13 +102,6 @@ public class PlayerBuilder {
 	public static void setPlayerAsATarget(String name) {
 		Player player = NFL.getPlayer(name);
 		player.setAsPlayerToTarget();
-	}
-
-	public static void setHandcuffsForSelectedPlayer(Player selectedPlayer) {
-		List<Player> positionGroup = NFL.getAvailablePlayersByPositionAsList(selectedPlayer.getPosition());
-		for (Player p : positionGroup) {
-//			if (p.g) TODO
-		}
 	}
 
 }

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import fantasy.comparator.PlayerDraftedOrderComparator;
-import fantasy.enums.Position;
+import fantasy.constants.Position;
 
 public class Team {
 

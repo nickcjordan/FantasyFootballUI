@@ -14,7 +14,7 @@ import fantasy.builder.PlayerBuilder;
 import fantasy.builder.TeamBuilder;
 import fantasy.comparator.DraftSelectionOrderComparator;
 import fantasy.comparator.UserDraftOrderComparator;
-import fantasy.enums.Position;
+import fantasy.constants.Position;
 import fantasy.exception.FalifaException;
 import fantasy.logic.LogicHandler;
 import fantasy.model.DraftPick;
@@ -67,7 +67,6 @@ public class DraftController extends BaseController {
     
 	private void doBaseDraft(Model model, Player player) {
 		Log.info("Player picked = " + player.getPlayerName());
-		PlayerBuilder.setHandcuffsForSelectedPlayer(player);
 		draftPicks.add(draftPlayer(currentDrafter, player));
 		Collections.sort(draftPicks, new DraftSelectionOrderComparator());
 		checkIfEndOfRound();

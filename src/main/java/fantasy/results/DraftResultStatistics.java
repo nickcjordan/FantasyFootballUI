@@ -2,7 +2,7 @@ package fantasy.results;
 
 import java.util.List;
 
-import fantasy.enums.Position;
+import fantasy.constants.Position;
 import fantasy.exception.FalifaException;
 import fantasy.model.Drafter;
 import fantasy.model.NFL;

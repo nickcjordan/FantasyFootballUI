@@ -1,16 +1,17 @@
 package fantasy.controller;
 
 import java.util.ArrayList;
-
+import static fantasy.constants.DataSourcePaths.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fantasy.Log;
-import fantasy.enums.DraftType;
-import fantasy.enums.Position;
+import fantasy.constants.DraftType;
+import fantasy.constants.Position;
 import fantasy.exception.FalifaException;
+import fantasy.io.DataFileReader;
 import fantasy.io.StatsCleaner;
 import fantasy.logic.LogicHandler;
 import fantasy.model.Draft;
@@ -21,7 +22,7 @@ public class HomeController extends BaseController {
 
     @RequestMapping(value = "/")
     public String init(Model model) {
-    	properties = loadProperties("logic.properties");
+    	properties = loadProperties(DRAFT_LOGIC_PROPERTIES_PATH);
     	errorMessage = null;
         NFL.resetPlayers();
     	NUMBER_OF_ROUNDS = get("numberOfRounds");
@@ -35,6 +36,16 @@ public class HomeController extends BaseController {
     	System.out.println("\n\n<^>     Ready to Draft     <^>\n\n");
         return "home";
     }
+    
+//    @RequestMapping(value = "/update")
+//    public String updateDataFiles() {
+//    	Log.info("Updating data source files...");
+//    	DataFileReader data = new DataFileReader();
+//    	String dataFilePath = data.getDataFilePathFromFantasyProsWebsite(ECR_FANTASYPROS_URL);
+//    	Log.info("Downloading from dataFilePath: " + dataFilePath);
+//    	data.downloadFileFromUrl(dataFilePath, ECR_FANTASYPROS_TEST_PATH);
+//        return "/";
+//    }
 	
 	// to hit this with "type" --> "http://localhost:8080/init?appRunType=type"
     @RequestMapping(value = "/start")

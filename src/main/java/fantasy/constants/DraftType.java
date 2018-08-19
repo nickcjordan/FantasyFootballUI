@@ -1,4 +1,4 @@
-package fantasy.enums;
+package fantasy.constants;
 
 import fantasy.Log;
 import fantasy.controller.BaseController;

@@ -1,24 +1,24 @@
 package fantasy.model;
 
-import static fantasy.enums.CSVFieldMapping.ADP;
-import static fantasy.enums.CSVFieldMapping.AVG;
-import static fantasy.enums.CSVFieldMapping.BEST;
-import static fantasy.enums.CSVFieldMapping.BYE;
-import static fantasy.enums.CSVFieldMapping.PLAYER_NAME;
-import static fantasy.enums.CSVFieldMapping.POS;
-import static fantasy.enums.CSVFieldMapping.RANK;
-import static fantasy.enums.CSVFieldMapping.STD_DEV;
-import static fantasy.enums.CSVFieldMapping.TEAM_NAME;
-import static fantasy.enums.CSVFieldMapping.VERSUS_ADP;
-import static fantasy.enums.CSVFieldMapping.WORST;
+import static fantasy.constants.CSVFieldMapping.ADP;
+import static fantasy.constants.CSVFieldMapping.AVG;
+import static fantasy.constants.CSVFieldMapping.BEST;
+import static fantasy.constants.CSVFieldMapping.BYE;
+import static fantasy.constants.CSVFieldMapping.PLAYER_NAME;
+import static fantasy.constants.CSVFieldMapping.POS;
+import static fantasy.constants.CSVFieldMapping.RANK;
+import static fantasy.constants.CSVFieldMapping.STD_DEV;
+import static fantasy.constants.CSVFieldMapping.TEAM_NAME;
+import static fantasy.constants.CSVFieldMapping.VERSUS_ADP;
+import static fantasy.constants.CSVFieldMapping.WORST;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.util.StringUtils;
 
+import fantasy.constants.Position;
 import fantasy.controller.BaseController;
-import fantasy.enums.Position;
 
 public class Player {
 
@@ -133,7 +133,7 @@ public class Player {
 	private int setTier() {
 		for (int i = 1; i <= 13; i++) {
 			int index = Integer.parseInt(BaseController.getProperties().getProperty("tier" + i));
-			if (Integer.parseInt(rank) < index) {
+			if (Integer.parseInt(rank) <= index) {
 				return i;
 			}
 		}

@@ -1,11 +1,21 @@
 package fantasy.builder;
 
+import static fantasy.constants.DataSourcePaths.ECR_FANTASYPROS_PATH;
+import static fantasy.constants.DataSourcePaths.NFL_TEAM_NAMES_PATH;
+import static fantasy.constants.DataSourcePaths.OLINERANK_TO_PLAYER_MAPPING_PATH;
+import static fantasy.constants.DataSourcePaths.PLAYERNOTES_CUSTOM_PATH;
+import static fantasy.constants.DataSourcePaths.PLAYERNOTES_EXPERTS_PATH;
+import static fantasy.constants.DataSourcePaths.PLAYERS_TO_TARGET_PATH;
+import static fantasy.constants.DataSourcePaths.PLAYER_PICTURES_PATH;
+import static fantasy.constants.DataSourcePaths.PREVIOUS_SEASON_TARGET_SHARE_PATH;
+import static fantasy.constants.DataSourcePaths.TAGS_CUSTOM_PATH;
+
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 
 import fantasy.Log;
-import fantasy.enums.CSVFieldMapping;
+import fantasy.constants.CSVFieldMapping;
 import fantasy.io.DataFileReader;
 import fantasy.model.Player;
 import fantasy.model.Team;
@@ -37,7 +47,7 @@ public class NFLBuilder {
 	}
 
 	private void addPlayersToPlayerLists() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/master_players.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile(ECR_FANTASYPROS_PATH)) {
 			if (split.get(CSVFieldMapping.POS.getIndex()).contains("TOL")) { // TOL == Total Offensive Line?
 				continue;
 			}
@@ -53,7 +63,7 @@ public class NFLBuilder {
 	}
 
 	private void addTeamsToTeamLists() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/team_names.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile(NFL_TEAM_NAMES_PATH)) {
 			Team team = TeamBuilder.buildTeamFromInput(split);
 			teams.put(team.getName(), team);
 			teams.put(team.getAbbrev(), team);
@@ -62,14 +72,14 @@ public class NFLBuilder {
 	}
 
 	public void addNotesToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/FantasyPros_notes.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile(PLAYERNOTES_EXPERTS_PATH)) {
 			try {
 				PlayerBuilder.addNote(split);
 			} catch (Exception e) {
 				Log.err("Could not add notes for " + e.getMessage());
 			}
 		}
-		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/nicks_notes.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile(PLAYERNOTES_CUSTOM_PATH)) {
 			try {
 				PlayerBuilder.addAdditionalNote(split);
 			} catch (Exception e) {
@@ -79,11 +89,51 @@ public class NFLBuilder {
 	}
 
 	public void addTagsToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/tags.csv")) {
+		for (List<String> split : dataReader.getSplitLinesFromFile(TAGS_CUSTOM_PATH)) {
 			try {
 				PlayerBuilder.addTag(split);
 			} catch (Exception e) {
 				Log.err("Could not set tags for " + split.get(0) + " :: " + e.getMessage());
+			}
+		}
+	}
+
+	public void addOLineRankingsToPlayers() throws FileNotFoundException {
+		for (List<String> split : dataReader.getSplitLinesFromFile(OLINERANK_TO_PLAYER_MAPPING_PATH)) {
+			try {
+				PlayerBuilder.addOLineRankings(split);
+			} catch (Exception e) {
+				Log.err("Could not set o line rank for " + split.get(0) + " :: " + e.getMessage());
+			}
+		}
+	}
+
+	public void addTargetsToPlayers() throws FileNotFoundException {
+		for (List<String> split : dataReader.getSplitLinesFromFile(PREVIOUS_SEASON_TARGET_SHARE_PATH)) {
+			try {
+				PlayerBuilder.addPlayerTargets(split);
+			} catch (Exception e) {
+				Log.err("Could not set targets for " + split.get(0) + " :: " + e.getMessage());
+			}
+		}
+	}
+
+	public void addPictureLinksToPlayers() throws FileNotFoundException {
+		for (List<String> split : dataReader.getSplitLinesFromFile(PLAYER_PICTURES_PATH)) {
+			try {
+				PlayerBuilder.addPlayerPicLinks(split);
+			} catch (Exception e) {
+				Log.err("Could not set picture links for " + split.get(0) + " :: " + e.getMessage());
+			}
+		}
+	}
+
+	public void setPlayersToTarget() throws FileNotFoundException {
+		for (String name : dataReader.getLinesFromFile(PLAYERS_TO_TARGET_PATH)) {
+			try {
+				PlayerBuilder.setPlayerAsATarget(name);
+			} catch (Exception e) {
+				Log.err("Could not set player as a target: " + name + " :: " + e.getMessage());
 			}
 		}
 	}
@@ -102,46 +152,6 @@ public class NFLBuilder {
 
 	public HashMap<Integer, Team> getTeamsById() {
 		return teamsById;
-	}
-
-	public void addOLineRankingsToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/o-line_to_player_rankings.csv")) {
-			try {
-				PlayerBuilder.addOLineRankings(split);
-			} catch (Exception e) {
-				Log.err("Could not set o line rank for " + split.get(0) + " :: " + e.getMessage());
-			}
-		}
-	}
-
-	public void addTargetsToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/targets.csv")) {
-			try {
-				PlayerBuilder.addPlayerTargets(split);
-			} catch (Exception e) {
-				Log.err("Could not set targets for " + split.get(0) + " :: " + e.getMessage());
-			}
-		}
-	}
-
-	public void addPictureLinksToPlayers() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile("src/main/resources/data/playerPics.csv")) {
-			try {
-				PlayerBuilder.addPlayerPicLinks(split);
-			} catch (Exception e) {
-				Log.err("Could not set picture links for " + split.get(0) + " :: " + e.getMessage());
-			}
-		}
-	}
-
-	public void setPlayersToTarget() throws FileNotFoundException {
-		for (String name : dataReader.getLinesFromFile("src/main/resources/data/playersToTarget.csv")) {
-			try {
-				PlayerBuilder.setPlayerAsATarget(name);
-			} catch (Exception e) {
-				Log.err("Could not set player as a target: " + name + " :: " + e.getMessage());
-			}
-		}
 	}
 
 }

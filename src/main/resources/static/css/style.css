@@ -1294,3 +1294,7 @@ html, body {
 .handcuff-player-text {
 	text-decoration: underline;
 }
+
+.update-data-files-button {
+	background-color: #6a6a6a;
+}
