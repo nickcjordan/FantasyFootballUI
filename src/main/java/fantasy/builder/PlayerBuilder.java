@@ -1,7 +1,10 @@
 package fantasy.builder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import fantasy.Log;
 import fantasy.constants.Tag;
@@ -12,12 +15,14 @@ import fantasy.model.Player;
 public class PlayerBuilder {
 	
 	public static Player buildPlayer(List<String> split) {
+		String name = split.get(1);
+		if (name == null) { throw new RuntimeException("ERROR when trying to build player :: split.get(0) == null"); }
 		Player player =  null;
 		try {
 			player =  new Player(split);
 			Log.deb("PlayerBuilder.buildPlayer() :: PLAYER BUILT=[" + String.format("(%d) %s - %s", player.getId(), player.getPlayerName(), player.getTeamName()) + "]");
 		} catch (Exception e) {
-			Log.err("ERROR parsing line:\n" + e.getMessage());
+			Log.err("ERROR parsing line when building player [" + name + "] :: " + e.getMessage());
 		}
 		return player;
 	}
@@ -104,4 +109,13 @@ public class PlayerBuilder {
 		player.setAsPlayerToTarget();
 	}
 
+	public static void setPlayerProjections(List<String> headers, List<String> split) {
+		Player player = NFL.getPlayer(split.get(0));
+		player.setProjectedPts(split.get(split.size() - 1));
+		LinkedHashMap<String, String> stats = new LinkedHashMap<String, String>();
+		for (int index = 2; index < headers.size() - 1; index++) { // only traversing stats not already extracted
+			stats.put(headers.get(index), split.get(index));
+		}
+		player.setProjectedStats(stats);
+	}
 }

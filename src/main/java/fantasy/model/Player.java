@@ -13,10 +13,16 @@ import static fantasy.constants.CSVFieldMapping.VERSUS_ADP;
 import static fantasy.constants.CSVFieldMapping.WORST;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.springframework.util.StringUtils;
 
+import fantasy.Log;
 import fantasy.constants.Position;
 import fantasy.controller.BaseController;
 
@@ -56,24 +62,28 @@ public class Player {
 	ArrayList<String> icons;
 	boolean isPlayerToTarget;
 	boolean isHandcuff;
+	String projectedPts;
+	Map<String, String> projectedStats;
 	
 	public Player(List<String> split) {
-		this.rank = split.get(RANK.getIndex());
-		this.teamName = extractTeamName(split);
-		setPosAndPosRank(split.get(POS.getIndex()));
-		this.playerName = getRealName(split);
-		this.bye = split.get(BYE.getIndex());
-		this.best = split.get(BEST.getIndex());
-		this.worst = split.get(WORST.getIndex());
-		this.avg = split.get(AVG.getIndex());
-		this.std_dev = split.get(STD_DEV.getIndex());
-		this.adp = getCorrectAdp(split.get(ADP.getIndex()));
-		this.id = Integer.parseInt(this.rank);
-		this.versus = split.get(VERSUS_ADP.getIndex());
-		this.available = true;
-		this.tags = "";
-		this.backups = new ArrayList<Player>();
-		this.tier = setTier();
+		try { this.rank = split.get(RANK.getIndex()); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting rank"); }
+		try { this.teamName = extractTeamName(split); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting teamName"); }
+		try { setPosAndPosRank(split.get(POS.getIndex())); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting posAndPosRank()"); }
+		try { this.playerName = getRealName(split); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting playerName with getRealName()"); }
+		try { this.bye = split.get(BYE.getIndex()); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting bye"); }
+		try { this.best = split.get(BEST.getIndex()); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting best"); }
+		try { this.worst = split.get(WORST.getIndex()); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting worst"); }
+		try { this.avg = split.get(AVG.getIndex()); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting avg"); }
+		try { this.std_dev = split.get(STD_DEV.getIndex()); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting std_dev"); }
+		try { this.adp = getCorrectAdp(split.get(ADP.getIndex())); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting adp"); this.adp = "500";}
+		try { this.id = Integer.parseInt(this.rank); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting id"); }
+		try { this.versus = split.get(VERSUS_ADP.getIndex()); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting versus"); this.versus = "0";}
+		try { this.available = true; } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting available"); }
+		try { this.tags = ""; } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting tags"); }
+		try { this.backups = new ArrayList<Player>(); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting backups"); }
+		try { this.tier = setTier(); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting tier"); }
+		try { this.projectedStats = new HashMap<String, String>(); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting projectedStats"); }
+		this.projectedPts = "-";
 	}
 	
 	public boolean isHandcuff() {
@@ -131,13 +141,15 @@ public class Player {
 	}
 
 	private int setTier() {
-		for (int i = 1; i <= 13; i++) {
-			int index = Integer.parseInt(BaseController.getProperties().getProperty("tier" + i));
-			if (Integer.parseInt(rank) <= index) {
-				return i;
-			}
+		for (int i = 1; i < 13; i++) {
+			try {
+				int index = Integer.parseInt(BaseController.getProperties().getProperty("tier" + i));
+				if (Integer.parseInt(rank) <= index) {
+					return i;
+				}
+			} catch (NumberFormatException e) {}
 		}
-		return 14;
+		return 13;
 	}
 
 	public int getTier() {
@@ -250,10 +262,10 @@ public class Player {
 		backups.add(cuff);
 		if (handcuffs != null) {
 			if (handcuffs.length() < 150) {
-				handcuffs = handcuffs + ", " + cuff.getShort();
+				handcuffs = handcuffs + ", " + cuff.getPlayerName();
 			}
 		} else {
-			handcuffs = cuff.getShort();
+			handcuffs = cuff.getPlayerName();
 		}
 	}
 
@@ -471,6 +483,22 @@ public class Player {
 	
 	public boolean isPlayerToTarget() {
 		return this.isPlayerToTarget;
+	}
+
+	public String getProjectedPts() {
+		return projectedPts;
+	}
+
+	public void setProjectedPts(String projectedPts) {
+		this.projectedPts = projectedPts;
+	}
+
+	public Map<String, String> getProjectedStats() {
+		return projectedStats;
+	}
+
+	public void setProjectedStats(Map<String, String> projectedStats) {
+		this.projectedStats = projectedStats;
 	}
 	
 }

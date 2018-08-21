@@ -33,16 +33,16 @@ public class DataFileReader {
 		}
 	}
 
-	public List<List<String>> getSplitLinesFromFile(String fileName) throws FileNotFoundException {
+	public List<List<String>> getSplitLinesFromFile(String fileName, boolean skipHeader, String regex) throws FileNotFoundException {
 		List<List<String>> splitLinesList = new ArrayList<>();
 		Scanner scanner = new Scanner(new File(fileName));
-		if (scanner.hasNextLine()) {
+		if (skipHeader && scanner.hasNextLine()) {
 			scanner.nextLine(); // move past header
 		}
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
 			if ((!StringUtils.isEmpty(line)) && (!line.equals("\"\""))) {
-				List<String> split = splitAndCleanupLine(line);
+				List<String> split = splitAndCleanupLine(line, regex);
 				splitLinesList.add(split);
 			}
 		}
@@ -50,9 +50,9 @@ public class DataFileReader {
 		return splitLinesList;
 	}
 
-	private List<String> splitAndCleanupLine(String line) {
+	private List<String> splitAndCleanupLine(String line, String regex) {
 		List<String> splitLine = new ArrayList<String>();
-		for (String text : line.split(",")) {
+		for (String text : line.split(regex)) {
 			String edited = (text == null || StringUtils.isEmpty(text.trim()) || text.trim().equals("\"\"")) ? "-" : text.trim();
 			splitLine.add(edited.replaceAll("\"", ""));
 		}

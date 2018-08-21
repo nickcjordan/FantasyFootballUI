@@ -67,7 +67,7 @@ public class BaseController {
 	
 	private static Map<String, RoundSpecificStrategy> getStrategyFromFile() throws FileNotFoundException {
 		Map<String, RoundSpecificStrategy> map = new HashMap<String, RoundSpecificStrategy>();
-		for (List<String> split : new DataFileReader().getSplitLinesFromFile(DRAFTSTRATEGY_CUSTOM_PATH)) {
+		for (List<String> split : new DataFileReader().getSplitLinesFromFile(DRAFTSTRATEGY_CUSTOM_PATH, true, ",")) {
 			RoundSpecificStrategy strategy = buildStrategy(split);
 			map.put(strategy.getRound(), strategy);
 		}
@@ -106,11 +106,7 @@ public class BaseController {
 	}
     
 	public static int get(String property) {
-		try {
 			return Integer.parseInt(properties.getProperty(property));
-		} catch (Exception e) {
-			throw e;
-		}
 	}
 	
 	public int getPickNumber() {

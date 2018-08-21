@@ -1,10 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="section">
-	<table class="table table-sm table-striped header-fixed dash tabbed-table">
+	<table class="table table-sm table-striped header-fixed dash tabbed-table thin-celled-table">
 		<thead class="thead-inverse">
 			<tr>
 				<th class="id-suggest">Adp</th>
 				<th class="name-suggest">Name</th>
+				<th class="proj-pts-suggest">PrjPts</th>
 				<th class="tags-suggest">Tags</th>
 				<th class="pos-suggest">Pos</th>
 				<th class="pos_rank-suggest">Rnk</th>
@@ -58,6 +59,7 @@
 							</c:choose>
 						</a>
 					</td>
+					<td class="proj-pts-suggest"><strong>${player.projectedPts}</strong></td>
 					<td class="tags-suggest">
 						<c:choose>
 							<c:when test="${player.icons==null}">&nbsp;</c:when>

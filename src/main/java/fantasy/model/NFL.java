@@ -39,6 +39,7 @@ public class NFL {
 			builder.addTargetsToPlayers();
 			builder.addPictureLinksToPlayers();
 			builder.setPlayersToTarget();
+			builder.setProjections();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
