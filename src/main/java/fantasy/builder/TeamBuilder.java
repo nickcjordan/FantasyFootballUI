@@ -16,15 +16,12 @@ public class TeamBuilder {
 	public static HashMap<String, String> mascotToTeamNameMapping = new HashMap<String, String>();
 	public static HashMap<String, String> teamNameToMascotMapping = new HashMap<String, String>();
 
-	static int id;
-	
 	static {
 		setNameMappings();
-		id = 0;
 	}
 	
-	public static Team buildTeamFromInput(List<String> split) {
-		return new NFLTeam(split.get(0), split.get(1), split.get(2));
+	public static Team buildTeamFromInput(int id, List<String> split) {
+		return new NFLTeam(split.get(0), split.get(1), split.get(2), id);
 	}
 	
 	public static String getProperTeamName(String teamName) {

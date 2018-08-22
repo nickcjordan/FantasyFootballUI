@@ -27,6 +27,10 @@ public class NFL {
 	static HashMap<Integer, Team> teamsById;
 	
 	static {
+		initNFL();
+	}
+	
+	public static void initNFL() {
 		NFLBuilder builder = new NFLBuilder();
 		players = builder.getPlayers();
 		playersById = builder.getPlayersById();

@@ -257,7 +257,7 @@ a {
 	text-transform: uppercase;
 	font-weight: 500;
 	color: #000;
-	margin-left: 25px;
+	margin-left: 50px;
 }
 
 .nav3>li>a {
@@ -628,8 +628,13 @@ ul.social-network li a {
 	font-size: 10pt;
 	text-align: center;
 }
+.value-suggest {
+	width: 4%;
+	font-size: 10pt;
+	text-align: center;
+}
 .tags-suggest {
-	width: 8%;
+	width: 6%;
 	font-size: 10pt;
 	text-align: center;
 }
@@ -664,30 +669,53 @@ ul.social-network li a {
 	text-align: center;
 }
 .handcuff-suggest {
-	width: 48%;
+	width: 46%;
 	font-size: 10pt;
 }
 
 
-.id-posList {
-	width: 4.5%;
+
+.id-posList { /* times 6 */
+	width: 3%;
 	font-size: 11pt;
 }
-
+.adp-posList {
+	width: 3%;
+	font-size: 11pt;
+}
+.bye-posList {
+	width: 3%;
+	font-size: 11pt;
+}
+.team-posList {
+	width: 4%;
+	font-size: 11pt;
+}
 .name-posList {
-	width: 12.5%;
+	width: 10%;
 	font-size: 11pt;
 }
-
 .handcuff-posList {
 	width: 40%;
 	font-size: 11pt;
 }
-
 .pos-posList {
-	width: 7%;
+	width: 4%;
 	font-size: 11pt;
 }
+.tags-posList {
+	width: 10%;
+	font-size: 11pt;
+}
+.proj-pts-posList {
+	width: 4%;
+	font-size: 11pt;
+}
+.value-posList {
+	width: 4%;
+	font-size: 11pt;
+}
+
 
 /*@media all and (min-width:768px)*/
 .modal-dialog {
@@ -876,6 +904,9 @@ ul.social-network li a {
 .dash>tbody {
 	max-height: 870px;
 	flex: 1;
+}
+
+.outer-scrollbar>tbody {
 	width: 101.5%;
 }
 
@@ -1365,4 +1396,50 @@ html, body {
 
 .proj-row {
 	margin-top: 20px;
+}
+
+
+
+.badge-neg-40 {
+	background-color: #b42124;
+}
+.badge-neg-20 {
+	background-color: #de4b4f;
+}
+.badge-neg-10 {
+	background-color: #e47073;
+}
+.badge-neg-5 {
+	background-color: #efa5a7;
+	color: black !important;
+}
+.badge-neg-2 {
+	background-color: #f9dbdc;
+	color: black !important;
+}
+.badge-even {
+	background-color: #ffffff;
+	color: black !important;
+}
+.badge-pos-2 {
+	background-color: #d9ffd5;
+	color: black !important;
+}
+.badge-pos-5 {
+	background-color: #9fff95;
+	color: black !important;
+}
+.badge-pos-10 {
+	background-color: #4aca4a;
+}
+.badge-pos-20 {
+	background-color: #30a530;
+}
+.badge-pos-40 {
+	background-color: #1d631d;
+}
+
+.badge-val {
+	color: white;
+	border: thin solid #6a6a6a;
 }

@@ -2,23 +2,14 @@ package fantasy.model;
 
 public class NFLTeam extends Team {
 
-	public static int ind = 1;
 	String abbrev;
 	String city;
 	
-	public NFLTeam(String city, String name, String abbrev) {
-		super(name, city, ind++, abbrev);
+	public NFLTeam(String city, String name, String abbrev, int id) {
+		super(name, city, id, abbrev);
 		this.abbrev = abbrev;
 		this.city = city;
 		this.fullName = city + " " + String.format("%-15s", name);
-	}
-
-	public static int getInd() {
-		return ind;
-	}
-
-	public static void setInd(int ind) {
-		NFLTeam.ind = ind;
 	}
 
 	public String getAbbrev() {

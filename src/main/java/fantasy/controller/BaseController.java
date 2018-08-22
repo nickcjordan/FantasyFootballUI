@@ -16,10 +16,12 @@ import org.springframework.stereotype.Controller;
 import fantasy.Log;
 import fantasy.constants.DraftType;
 import fantasy.io.DataFileReader;
+import fantasy.io.StatsCleaner;
 import fantasy.logic.LogicHandler;
 import fantasy.model.Draft;
 import fantasy.model.DraftPick;
 import fantasy.model.Drafter;
+import fantasy.model.NFL;
 import fantasy.model.Player;
 import fantasy.model.RoundSpecificStrategy;
 
@@ -44,32 +46,46 @@ public class BaseController {
 	public static Map<String, RoundSpecificStrategy> strategyByRound;
 	public static List<Player> currentRoundHandcuffs;
 	
-	
 	static {
-		Properties prop = new Properties();
-		try {
-    		prop.load(new FileInputStream(new File(DRAFT_LOGIC_PROPERTIES_PATH)));
-    		strategyByRound = getStrategyFromFile();
-    	} catch (IOException ex) {
-    		Log.err("Error pulling data from file");
-        }
+		properties = loadProperties(DRAFT_LOGIC_PROPERTIES_PATH);
+//		initDraft();
+//		NFL.initNFL();
 	}
 	
-	protected static Properties loadProperties(String PROPERTIES_FILE_NAME) {
+	protected static void initDraft() {
+		properties = loadProperties(DRAFT_LOGIC_PROPERTIES_PATH);
+    	strategyByRound = getStrategyFromFile();
+    	errorMessage = null;
+    	NUMBER_OF_ROUNDS = get("numberOfRounds");
+    	draftPicks = new ArrayList<>();
+    	roundNum = 1;
+    	pickNumber = 1;
+    	draftOrderIndex = 0;
+    	StatsCleaner.cleanupTags();
+    	StatsCleaner.cleanupNickNotes();
+    	
+    	System.out.println("\n\n<^>     Ready to Draft     <^>\n\n");
+	}
+	
+	protected static Properties loadProperties(String fileName) {
 		Properties prop = new Properties();
 		try {
-    		prop.load(new FileInputStream(new File(PROPERTIES_FILE_NAME)));
+    		prop.load(new FileInputStream(new File(fileName)));
     	} catch (IOException ex) {
-    		Log.err("Could not load " + PROPERTIES_FILE_NAME);
+    		Log.err("Could not load file: " + fileName);
         }
 		return prop;
 	}
 	
-	private static Map<String, RoundSpecificStrategy> getStrategyFromFile() throws FileNotFoundException {
+	protected static Map<String, RoundSpecificStrategy> getStrategyFromFile() {
 		Map<String, RoundSpecificStrategy> map = new HashMap<String, RoundSpecificStrategy>();
-		for (List<String> split : new DataFileReader().getSplitLinesFromFile(DRAFTSTRATEGY_CUSTOM_PATH, true, ",")) {
-			RoundSpecificStrategy strategy = buildStrategy(split);
-			map.put(strategy.getRound(), strategy);
+		try {
+			for (List<String> split : new DataFileReader().getSplitLinesFromFile(DRAFTSTRATEGY_CUSTOM_PATH, true, ",")) {
+				RoundSpecificStrategy strategy = buildStrategy(split);
+				map.put(strategy.getRound(), strategy);
+			}
+		} catch (FileNotFoundException e) {
+			Log.err("ERROR :: could not find strategies file: " + e.getMessage());
 		}
 		return map;
 	}
@@ -101,7 +117,7 @@ public class BaseController {
 		return percent;
 	}
 	
-	List<Player> getSuggs(Drafter drafter) {
+	List<Player> getSuggestedAvailablePlayers(Drafter drafter) {
 		return new LogicHandler(drafter).getMySuggestions();
 	}
     

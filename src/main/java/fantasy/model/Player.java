@@ -64,6 +64,7 @@ public class Player {
 	boolean isHandcuff;
 	String projectedPts;
 	Map<String, String> projectedStats;
+	int currentPlayerValue;
 	
 	public Player(List<String> split) {
 		try { this.rank = split.get(RANK.getIndex()); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting rank"); }
@@ -84,6 +85,7 @@ public class Player {
 		try { this.tier = setTier(); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting tier"); }
 		try { this.projectedStats = new HashMap<String, String>(); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting projectedStats"); }
 		this.projectedPts = "-";
+		try { this.currentPlayerValue = (0 - Integer.valueOf(this.adp)); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting currentPlayerValue"); }
 	}
 	
 	public boolean isHandcuff() {
@@ -499,6 +501,14 @@ public class Player {
 
 	public void setProjectedStats(Map<String, String> projectedStats) {
 		this.projectedStats = projectedStats;
+	}
+
+	public int getCurrentPlayerValue() {
+		return currentPlayerValue;
+	}
+
+	public void setCurrentPlayerValue(int currentPlayerValue) {
+		this.currentPlayerValue = currentPlayerValue;
 	}
 	
 }

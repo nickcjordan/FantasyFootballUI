@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import fantasy.Log;
+
 @RestController
 @RequestMapping("/error")
 public class ErrorHandlerController implements ErrorController {
@@ -32,9 +34,14 @@ public class ErrorHandlerController implements ErrorController {
 	@RequestMapping
 	public Map<String, Object> error(HttpServletRequest aRequest){
 		Map<String, Object> body = getErrorAttributes(aRequest,getTraceParameter(aRequest));
-		String trace = (String) body.get("trace");
-		if(trace != null){
-			body.put("trace", trace.split("\n\t"));
+		String unsplit = ((String) body.get("trace"));
+		if (unsplit != null) {
+			Log.err(unsplit);
+			BaseController.errorMessage = "ERROR :: " + unsplit;
+			String[] trace = unsplit.split("\n\t");
+			if (trace != null) {
+				body.put("trace", trace);
+			} 
 		}
 		return body;
 	}

@@ -14,15 +14,6 @@ public class Drafter {
 		this.draftOrderNumber = draftOrderNumber;
 		this.draftedTeam = draftedTeam;
 	}
-	
-//	public boolean hasStarterOfPlayer(Player player) {
-//		for (Player draftedPlayer : draftedTeam.getAllInDraftedOrder()) {
-//			if (draftedPlayer.getPosition().equals(player.getPosition()) && draftedPlayer.getTeamName().equals(player.getTeamName())) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 
 	public String getName() {
 		return name;

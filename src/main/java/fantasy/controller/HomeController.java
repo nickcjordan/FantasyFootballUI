@@ -22,18 +22,8 @@ public class HomeController extends BaseController {
 
     @RequestMapping(value = "/")
     public String init(Model model) {
-    	properties = loadProperties(DRAFT_LOGIC_PROPERTIES_PATH);
-    	errorMessage = null;
-        NFL.resetPlayers();
-    	NUMBER_OF_ROUNDS = get("numberOfRounds");
-    	draftPicks = new ArrayList<>();
-    	roundNum = 1;
-    	pickNumber = 1;
-    	draftOrderIndex = 0;
-    	StatsCleaner.cleanupTags();
-    	StatsCleaner.cleanupNickNotes();
-    	
-    	System.out.println("\n\n<^>     Ready to Draft     <^>\n\n");
+    	NFL.initNFL();
+    	initDraft();
         return "home";
     }
     
@@ -61,7 +51,7 @@ public class HomeController extends BaseController {
     	model.addAttribute("draft", draft);
 		model.addAttribute("currentDrafter", currentDrafter);
 		
-		model.addAttribute("playersSortedBySuggestions", getSuggs(currentDrafter));
+		model.addAttribute("playersSortedBySuggestions", getSuggestedAvailablePlayers(currentDrafter));
 		model.addAttribute("playersSortedByAdp", NFL.getAllAvailablePlayersByADP());
 		model.addAttribute("playersSortedByRank", NFL.getAllAvailablePlayersByRank());
 		

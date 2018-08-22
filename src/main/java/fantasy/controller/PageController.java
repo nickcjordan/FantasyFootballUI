@@ -30,21 +30,17 @@ public class PageController extends BaseController {
 	    	model.addAttribute("playerList", NFL.getAvailablePlayersByPositionAsList(Position.get(pos)));
 	    	model.addAttribute("positionName", Position.get(pos).getName());
 		}
-        model.addAttribute("roundNumber", roundNum);
-        model.addAttribute("pickNumber", pickNumber);
-        model.addAttribute("progressPercent", getPercent());
+        addCommonModelAttributes(model);
         return "pages/positionPage";
     }
     
     @RequestMapping(value = "/nflTeams")
     public String teamPage(@RequestParam(required=false, defaultValue="1") String teamId, Model model) throws FalifaException {
 		Team team = NFL.getTeam(Integer.parseInt(teamId.replace("'", "")));
-		model.addAttribute("progressPercent", getPercent());
 		model.addAttribute("team", team);
 		model.addAttribute("teamName", team.getFullName());
 		model.addAttribute("allTeams", NFL.getTeamList());
-        model.addAttribute("roundNumber", roundNum);
-        model.addAttribute("pickNumber", pickNumber);
+        addCommonModelAttributes(model);
         return "pages/teamPage";
     }
     
@@ -56,29 +52,24 @@ public class PageController extends BaseController {
     			drafter = d;
     		}
     	}
-    	model.addAttribute("progressPercent", getPercent());
 		model.addAttribute("team", drafter.getDraftedTeam());
 		model.addAttribute("teamName", drafter.getName());
 		model.addAttribute("drafters", draft.getDrafters());
-        model.addAttribute("roundNumber", roundNum);
-        model.addAttribute("pickNumber", pickNumber);
+        addCommonModelAttributes(model);
         return "pages/drafterPage";
     }
     
     @RequestMapping(value = "/dashboard")
 	public String dashboard(Model model) {
     	errorMessage = null;
-    	model.addAttribute("progressPercent", getPercent());
     	model.addAttribute("draft", draft);
 		model.addAttribute("currentDrafter", currentDrafter);
-		model.addAttribute("suggestions", getSuggs(currentDrafter));
-		model.addAttribute("roundNumber", roundNum);
-		model.addAttribute("pickNumber", pickNumber);
+		model.addAttribute("suggestions", getSuggestedAvailablePlayers(currentDrafter));
 		model.addAttribute("draftPicks", draftPicks);
 		model.addAttribute("playerList", NFL.getAllAvailablePlayersByADP());
         model.addAttribute("currentDraftedTeam", currentDrafter.getDraftedTeam());
         
-        model.addAttribute("playersSortedBySuggestions", getSuggs(currentDrafter));
+        model.addAttribute("playersSortedBySuggestions", getSuggestedAvailablePlayers(currentDrafter));
 		model.addAttribute("playersSortedByAdp", NFL.getAllAvailablePlayersByADP());
 		model.addAttribute("playersSortedByRank", NFL.getAllAvailablePlayersByRank());
 		
@@ -89,6 +80,7 @@ public class PageController extends BaseController {
     	model.addAttribute("drafters", DraftController.getCorrectlyOrderedDrafterList());
       	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
       	model.addAttribute("draftersPickNumberList", new LogicHandler(currentDrafter).getDraftPickIndexList());
+      	addCommonModelAttributes(model);
 		return "pages/dashboardPage";
     }
     
@@ -102,7 +94,15 @@ public class PageController extends BaseController {
     	model.addAttribute("draft", draft);
     	model.addAttribute("roundNumber", roundNum);
     	model.addAttribute("pickNumber", pickNumber);
+    	addCommonModelAttributes(model);
     	return "pages/draftBoardPage";
+    }
+    
+    private void addCommonModelAttributes(Model model) {
+    	model.addAttribute("roundNumber", roundNum);
+        model.addAttribute("pickNumber", pickNumber);
+        model.addAttribute("progressPercent", getPercent());
+        model.addAttribute("currentRoundHandcuffs", BaseController.currentRoundHandcuffs);
     }
     
 }

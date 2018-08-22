@@ -16,7 +16,9 @@ import java.util.List;
 
 import fantasy.Log;
 import fantasy.constants.CSVFieldMapping;
+import fantasy.controller.BaseController;
 import fantasy.io.DataFileReader;
+import fantasy.model.NFL;
 import fantasy.model.Player;
 import fantasy.model.Team;
 
@@ -76,8 +78,9 @@ public class NFLBuilder {
 	}
 
 	private void addTeamsToTeamLists() throws FileNotFoundException {
+		int id = 1;
 		for (List<String> split : dataReader.getSplitLinesFromFile(NFL_TEAM_NAMES_PATH, true, ",")) {
-			Team team = TeamBuilder.buildTeamFromInput(split);
+			Team team = TeamBuilder.buildTeamFromInput(id++, split);
 			teams.put(team.getName(), team);
 			teams.put(team.getAbbrev(), team);
 			teamsById.put(team.getId(), team);
@@ -170,6 +173,13 @@ public class NFLBuilder {
 				Log.err("Could not set  projections: " + split.get(0) + " :: " + e.getMessage());
 			}
 		}
+	}
+
+	public static void populateCurrentPlayerValue() {
+		for (Player p : NFL.getPlayerMap().values()) {
+			p.setCurrentPlayerValue(BaseController.pickNumber - Integer.valueOf(p.getAdp()));
+		}
+			
 	}
 
 }

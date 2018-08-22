@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fantasy.Log;
+import fantasy.builder.NFLBuilder;
 import fantasy.builder.PlayerBuilder;
 import fantasy.builder.TeamBuilder;
 import fantasy.comparator.DraftSelectionOrderComparator;
@@ -71,11 +72,11 @@ public class DraftController extends BaseController {
 		Collections.sort(draftPicks, new DraftSelectionOrderComparator());
 		checkIfEndOfRound();
 		moveToNextDrafter();
-		setCorrectHandcuffsForCurrentDrafter();
+		NFLBuilder.populateCurrentPlayerValue();
         addAttributes(model);
 	}
     
-	private void setCorrectHandcuffsForCurrentDrafter() {
+	private static void setCorrectHandcuffsForCurrentDrafter() {
 		Drafter current = BaseController.currentDrafter;
 		List<Player> players = new ArrayList<Player>();
 		for (Player drafted : current.getDraftedTeam().getAllInDraftedOrder()) {
@@ -93,12 +94,13 @@ public class DraftController extends BaseController {
 	}
 
 	private void addAttributes(Model model) {
+		setCorrectHandcuffsForCurrentDrafter();
 		model.addAttribute("progressPercent", getPercent());
 		model.addAttribute("draft", draft);
         model.addAttribute("currentDrafter", currentDrafter);
         model.addAttribute("currentRoundHandcuffs", BaseController.currentRoundHandcuffs);
         
-        model.addAttribute("playersSortedBySuggestions", getSuggs(currentDrafter));
+        model.addAttribute("playersSortedBySuggestions", getSuggestedAvailablePlayers(currentDrafter));
 		model.addAttribute("playersSortedByAdp", NFL.getAllAvailablePlayersByADP());
 		model.addAttribute("playersSortedByRank", NFL.getAllAvailablePlayersByRank());
         
