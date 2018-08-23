@@ -81,24 +81,28 @@ public class TeamBuilder {
 			String pos = player.getPos();
 			//Log.deb(player.getNameAndId());
 	
-			if (pos.equals("QB")){
-				team.getQb().add(player);
-				checkIfHandcuff(player, team.getQb());
-			} if (pos.equals("RB")){
-				team.getRb().add(player);
-				checkIfHandcuff(player, team.getRb());
-			} if (pos.equals("WR")){
-				team.getWr().add(player);
-				checkIfHandcuff(player, team.getWr());
-			} if (pos.equals("TE")){
-				team.getTe().add(player);
-				checkIfHandcuff(player, team.getTe());
-			} if (pos.equals("K")){
-				team.getK().add(player);
-				checkIfHandcuff(player, team.getK());
-			} if (pos.equals("DST")){
-				team.getD().add(player);
-				checkIfHandcuff(player, team.getD());
+			try {
+				if (pos.equals("QB")){
+					team.getQb().add(player);
+					checkIfHandcuff(player, team.getQb());
+				} if (pos.equals("RB")){
+					team.getRb().add(player);
+					checkIfHandcuff(player, team.getRb());
+				} if (pos.equals("WR")){
+					team.getWr().add(player);
+					checkIfHandcuff(player, team.getWr());
+				} if (pos.equals("TE")){
+					team.getTe().add(player);
+					checkIfHandcuff(player, team.getTe());
+				} if (pos.equals("K")){
+					team.getK().add(player);
+					checkIfHandcuff(player, team.getK());
+				} if (pos.equals("DST")){
+					team.getD().add(player);
+					checkIfHandcuff(player, team.getD());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 	}
 	

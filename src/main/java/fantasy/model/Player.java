@@ -66,6 +66,28 @@ public class Player {
 	Map<String, String> projectedStats;
 	int currentPlayerValue;
 	
+	public Player() {
+		super();
+		setEmptyFields();
+	}
+
+	private void setEmptyFields() {
+		this.rank = "";
+		this.teamName = "";
+		this.pos = "";
+		this.pos_rank = "";
+		this.playerName = ""; 
+		this.bye = "";
+		this.best = "";
+		this.worst = "";
+		this.avg = "";
+		this.std_dev = ""; 
+		this.adp = "";
+		this.versus = "";
+		this.tags = "";
+		this.projectedPts = "-";
+	}
+	
 	public Player(List<String> split) {
 		try { this.rank = split.get(RANK.getIndex()); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting rank"); }
 		try { this.teamName = extractTeamName(split); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting teamName"); }
@@ -86,6 +108,15 @@ public class Player {
 		try { this.projectedStats = new HashMap<String, String>(); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting projectedStats"); }
 		this.projectedPts = "-";
 		try { this.currentPlayerValue = (0 - Integer.valueOf(this.adp)); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting currentPlayerValue"); }
+	}
+	
+	public void finishBuildingPlayer() {
+		try { this.id = Integer.parseInt(this.rank); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting id"); }
+		try { this.currentPlayerValue = (0 - Integer.valueOf(this.adp)); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting currentPlayerValue"); }
+		try { this.projectedStats = new HashMap<String, String>(); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting projectedStats"); }
+		try { this.backups = new ArrayList<Player>(); } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting backups"); }
+		try { this.tags = ""; } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting tags"); }
+		try { this.available = true; } catch (Exception e) { Log.err("ERROR in Player() constructor :: error setting available"); }
 	}
 	
 	public boolean isHandcuff() {
@@ -141,6 +172,12 @@ public class Player {
 		}
 		return split.get(TEAM_NAME.getIndex());
 	}
+	
+	public String extractTeamNameFromDSTPlayer(String name) {
+		String[] splitText = this.playerName.split(" ");
+		String edit = splitText[splitText.length - 1].replace("(", "").replace(")", "");
+		return edit;
+	}
 
 	private int setTier() {
 		for (int i = 1; i < 13; i++) {
@@ -158,28 +195,7 @@ public class Player {
 		return tier;
 	}
 
-	public Player() {
-		super();
-		setEmptyFields();
-	}
-
-	private void setEmptyFields() {
-		this.rank = "";
-		this.teamName = "";
-		this.pos = "";
-		this.pos_rank = "";
-		this.playerName = ""; 
-		this.bye = "";
-		this.best = "";
-		this.worst = "";
-		this.avg = "";
-		this.std_dev = ""; 
-		this.adp = "";
-		this.versus = "";
-		this.tags = "";
-	}
-
-	private String getCorrectAdp(String s) {
+	public String getCorrectAdp(String s) {
 		if (s.contains(".0")) {
 			s = s.replace(".0", "");
 		}
@@ -199,7 +215,11 @@ public class Player {
 	}
 	
 	public void addAdditionalNotes(String addition) {
-		this.notes = this.notes + "   [" + addition + "]";
+		if (this.notes == null) {
+			this.notes = addition;
+		} else {
+			this.notes = this.notes + "   [" + addition + "]";
+		}
 	}
 	
 	public void addNicksNotes(String notes) {
@@ -214,7 +234,7 @@ public class Player {
 		return nickNotes;
 	}
 
-	private void setPosAndPosRank(String position) {
+	public void setPosAndPosRank(String position) {
 		int ind = -1;
 		for (int i = 0; i < position.length(); i++){
 			if (Character.isDigit(position.charAt(i))){
@@ -510,5 +530,11 @@ public class Player {
 	public void setCurrentPlayerValue(int currentPlayerValue) {
 		this.currentPlayerValue = currentPlayerValue;
 	}
+
+	public void setTier(int tier) {
+		this.tier = tier;
+	}
+	
+	
 	
 }

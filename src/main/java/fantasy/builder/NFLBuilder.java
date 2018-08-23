@@ -75,32 +75,35 @@ public class NFLBuilder {
 		return teamsById;
 	}
 
+//	private void addPlayersToPlayerLists() throws FileNotFoundException {
+//		for (List<String> split : dataReader.getSplitLinesFromFile(ECR_FANTASYPROS_PATH, true, ",")) {
+//			if (split.get(CSVFieldMapping.POS.getIndex()).contains("TOL")) { // TOL == Total Offensive Line?
+//				continue;
+//			}
+//			try {
+//				Player player = PlayerBuilder.buildPlayer(split);
+//				players.put(player.getPlayerName(), player);
+//				TeamBuilder.addPlayerToTeam(player, teams.get(player.getTeamName()));
+//				playersById.put(player.getId(), player);
+//			} catch (Exception e) {
+//				Log.err("ERROR adding player to players list: " + split.get(CSVFieldMapping.PLAYER_NAME.getIndex()) + " :: " + e.getMessage());
+//			}
+//		}
+//	}
+	
 	private void addPlayersToPlayerLists() throws FileNotFoundException {
-		for (List<String> split : dataReader.getSplitLinesFromFile(ECR_FANTASYPROS_PATH, true, ",")) {
-			if (split.get(CSVFieldMapping.POS.getIndex()).contains("TOL")) { // TOL == Total Offensive Line?
-				continue;
-			}
-			try {
-				Player player = PlayerBuilder.buildPlayer(split);
-				players.put(player.getPlayerName(), player);
-				TeamBuilder.addPlayerToTeam(player, teams.get(player.getTeamName()));
-				playersById.put(player.getId(), player);
-			} catch (Exception e) {
-				Log.err("ERROR adding player to players list: " + split.get(CSVFieldMapping.PLAYER_NAME.getIndex()) + " :: " + e.getMessage());
-			}
+		for (Player player : parser.getPlayersFromHtml()) {
+//			Player player = PlayerBuilder.buildPlayer(split);
+			players.put(player.getPlayerName(), player);
+			TeamBuilder.addPlayerToTeam(player, teams.get(player.getTeamName()));
+			playersById.put(player.getId(), player);
 		}
 	}
-	
-//	private void addPlayersToPlayerLists() throws FileNotFoundException {
-//		parser.getPlayersFromHtml();
-//		
-//	}
 
 	private void addTeamsToTeamLists() throws FileNotFoundException {
 		int id = 1;
 		for (List<String> split : dataReader.getSplitLinesFromFile(NFL_TEAM_NAMES_PATH, true, ",")) {
 			Team team = TeamBuilder.buildTeamFromInput(id++, split);
-			teams.put(team.getName(), team);
 			teams.put(team.getAbbrev(), team);
 			teamsById.put(team.getId(), team);
 		}
