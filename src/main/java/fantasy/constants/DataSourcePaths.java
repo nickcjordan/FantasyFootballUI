@@ -19,6 +19,9 @@ public class DataSourcePaths {
 	
 	public static final String ECR_FANTASYPROS_TEST_PATH = "src/main/resources/data/master_players_test.csv";
 	
+	public static final String PLAYER_NOTES_HTML_PATH = "src/main/resources/data/html/playerNotesHtml.html";
+	public static final String PPR_RANKINGS_HTML_PATH = "src/main/resources/data/html/master_players.html";
+	
 	
 	public static final String QB_PROJECTIONS_PATH = "src/main/resources/data/projections/FantasyPros_Fantasy_Football_Projections_QB.csv";
 	public static final String RB_PROJECTIONS_PATH = "src/main/resources/data/projections/FantasyPros_Fantasy_Football_Projections_RB.csv";

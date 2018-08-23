@@ -5,5 +5,3 @@
 	<td class="bye-db_drafterTeam">${player.bye}</td>
 	<td class="pos-db_drafterTeam">${player.pos_rank}/${player.rank}</td>
 </tr>
-
-<%@include file="../../common/modal.jsp"%>

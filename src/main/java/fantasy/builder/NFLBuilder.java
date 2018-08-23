@@ -1,23 +1,35 @@
 package fantasy.builder;
 
-import static fantasy.constants.DataSourcePaths.*;
+import static fantasy.constants.DataSourcePaths.DST_PROJECTIONS_PATH;
+import static fantasy.constants.DataSourcePaths.ECR_FANTASYPROS_PATH;
+import static fantasy.constants.DataSourcePaths.K_PROJECTIONS_PATH;
 import static fantasy.constants.DataSourcePaths.NFL_TEAM_NAMES_PATH;
 import static fantasy.constants.DataSourcePaths.OLINERANK_TO_PLAYER_MAPPING_PATH;
 import static fantasy.constants.DataSourcePaths.PLAYERNOTES_CUSTOM_PATH;
 import static fantasy.constants.DataSourcePaths.PLAYERNOTES_EXPERTS_PATH;
 import static fantasy.constants.DataSourcePaths.PLAYERS_TO_TARGET_PATH;
+import static fantasy.constants.DataSourcePaths.PLAYER_NOTES_HTML_PATH;
 import static fantasy.constants.DataSourcePaths.PLAYER_PICTURES_PATH;
 import static fantasy.constants.DataSourcePaths.PREVIOUS_SEASON_TARGET_SHARE_PATH;
+import static fantasy.constants.DataSourcePaths.QB_PROJECTIONS_PATH;
+import static fantasy.constants.DataSourcePaths.RB_PROJECTIONS_PATH;
 import static fantasy.constants.DataSourcePaths.TAGS_CUSTOM_PATH;
+import static fantasy.constants.DataSourcePaths.TE_PROJECTIONS_PATH;
+import static fantasy.constants.DataSourcePaths.WR_PROJECTIONS_PATH;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
+
+import com.jaunt.Element;
+import com.jaunt.UserAgent;
 
 import fantasy.Log;
 import fantasy.constants.CSVFieldMapping;
 import fantasy.controller.BaseController;
 import fantasy.io.DataFileReader;
+import fantasy.io.HTMLParser;
 import fantasy.model.NFL;
 import fantasy.model.Player;
 import fantasy.model.Team;
@@ -29,6 +41,7 @@ public class NFLBuilder {
 	HashMap<String, Team> teams;
 	HashMap<Integer, Team> teamsById;
 	private DataFileReader dataReader;
+	HTMLParser parser;
 
 	public NFLBuilder() {
 		players = new HashMap<String, Player>();
@@ -36,6 +49,7 @@ public class NFLBuilder {
 		playersById = new HashMap<Integer, Player>();
 		teamsById = new HashMap<Integer, Team>();
 		dataReader = new DataFileReader();
+		parser = new HTMLParser();
 		buildTeams();
 	}
 
@@ -76,6 +90,11 @@ public class NFLBuilder {
 			}
 		}
 	}
+	
+//	private void addPlayersToPlayerLists() throws FileNotFoundException {
+//		parser.getPlayersFromHtml();
+//		
+//	}
 
 	private void addTeamsToTeamLists() throws FileNotFoundException {
 		int id = 1;
@@ -88,18 +107,21 @@ public class NFLBuilder {
 	}
 
 	public void addNotesToPlayers() throws FileNotFoundException {
+		// https://www.fantasypros.com/nfl/notes/draft-overall.php?type=PPR
+		parser.addNotesFromHtml();
+		
 		for (List<String> split : dataReader.getSplitLinesFromFile(PLAYERNOTES_EXPERTS_PATH, true, ",")) {
 			try {
-				PlayerBuilder.addNote(split);
+				PlayerBuilder.addAdditionalNote(split);
 			} catch (Exception e) {
-				Log.err("Could not add notes for " + e.getMessage());
+				Log.err("Could not add notes: " + e.getMessage());
 			}
 		}
 		for (List<String> split : dataReader.getSplitLinesFromFile(PLAYERNOTES_CUSTOM_PATH, true, ",")) {
 			try {
 				PlayerBuilder.addAdditionalNote(split);
 			} catch (Exception e) {
-				Log.err("Could not add notes for " + e.getMessage());
+				Log.err("Could not add notes: " + e.getMessage());
 			}
 		}
 	}

@@ -31,4 +31,3 @@
 	<td class="handcuff-3">${player.checkForHandcuff()}</td>
 </tr>
 
-<%@include file="../../common/modal.jsp"%>

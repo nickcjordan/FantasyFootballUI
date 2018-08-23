@@ -103,6 +103,7 @@ public class PageController extends BaseController {
         model.addAttribute("pickNumber", pickNumber);
         model.addAttribute("progressPercent", getPercent());
         model.addAttribute("currentRoundHandcuffs", BaseController.currentRoundHandcuffs);
+        model.addAttribute("allPlayersList", BaseController.getAllPlayers());
     }
     
 }

@@ -40,7 +40,6 @@
 							    </c:otherwise>
 							</c:choose>
 						
-						<%@include file="../common/modal.jsp"%>
 				    	</c:forEach>
 					</tr>
 				</c:forEach>

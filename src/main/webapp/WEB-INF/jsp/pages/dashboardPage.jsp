@@ -19,10 +19,6 @@
 	<div class="container-fluid">
 	<%@include file="../common/nav.jsp"%>
 	
-	<c:forEach items="${playersSortedBySuggestions}" var="player" varStatus="status">
-		<%@include file="../common/modal.jsp"%>
-	</c:forEach>
-	
 	<div class="row">
 		<div class="col-md-2">
 			<div class="center thin-text"><h3><strong>Draft Feed:</strong></h3></div>

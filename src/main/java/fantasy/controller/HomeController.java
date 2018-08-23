@@ -62,6 +62,7 @@ public class HomeController extends BaseController {
 		model.addAttribute("currentDraftedTeam", currentDrafter.getDraftedTeam());
       	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
       	model.addAttribute("draftersPickNumberList", new LogicHandler(currentDrafter).getDraftPickIndexList());
+      	model.addAttribute("allPlayersList", BaseController.getAllPlayers());
 		for (Position position : Position.values()) {
 			model.addAttribute("drafted" + position.getAbbrev(), currentDrafter.getDraftedTeam().getPlayersByPosition(position)); 
 			model.addAttribute(position.getAbbrev() + "List", NFL.getAvailablePlayersByPositionAsList(position));

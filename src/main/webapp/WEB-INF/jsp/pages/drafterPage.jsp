@@ -16,31 +16,19 @@
 	<div class="container-fluid">
 
 		<%@include file="../common/nav.jsp"%>
+		
+		<div class="drafters-tables-wrapper">
 
-		<div class="col-md-1">
-			<div class="menu-drafters">
-				<h3 class="center underline">
-					<strong>Drafters:</strong>
-				</h3>
-				<div class="navbar-header">
-					<ul
-						class="nav nav3 nav-pills nav-stacked nav3-stacked nav-stacked-teams">
-						<c:forEach items="${drafters}" var="drafter">
-							<li><a href="/drafters?drafterName=${drafter.getName()}">${drafter.getName()}</a></li>
-						</c:forEach>
-					</ul>
+			<c:forEach items="${drafters}" var="drafter">
+				<div class="col-sm-1 condensed-column">
+					<%@include file="../tables/drafterTeamTableCondensed.jsp"%>
 				</div>
-			</div>
-		</div>
-
-		<div class="col-md-11">
-			<%@include file="../tables/playerTableByDrafter.jsp"%>
+			</c:forEach>
+		
 		</div>
 
 		<c:if test="<%=fantasy.controller.BaseController.errorMessage != null%>">
-			<script>
-				alert("<%=fantasy.controller.BaseController.errorMessage%>");
-			</script>
+			<script>alert("<%=fantasy.controller.BaseController.errorMessage%>");</script>
 		</c:if>
 
 		<%@include file="../common/progressBar.jsp"%>

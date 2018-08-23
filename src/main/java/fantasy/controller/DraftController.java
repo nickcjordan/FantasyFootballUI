@@ -111,6 +111,7 @@ public class DraftController extends BaseController {
       	model.addAttribute("drafters", getCorrectlyOrderedDrafterList());
       	model.addAttribute("strategy", strategyByRound.get(String.valueOf(roundNum)));
       	model.addAttribute("draftersPickNumberList", new LogicHandler(currentDrafter).getDraftPickIndexList());
+      	model.addAttribute("allPlayersList", BaseController.getAllPlayers());
         for (Position position : Position.values()) {
         	model.addAttribute(position.getAbbrev() + "List", NFL.getAvailablePlayersByPositionAsList(position));
         }

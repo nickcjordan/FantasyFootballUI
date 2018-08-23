@@ -112,7 +112,7 @@ public class BaseController {
 		if (pickNumber == 1) {
 			return 0;
 		}
-		percent = (((pickNumber - 1) / 192.0) * 100);
+		percent = (((pickNumber - 1) / (NUMBER_OF_ROUNDS * draft.getDrafters().size())) * 100);
 		percent = (double)Math.round(percent * 100d) / 100d;
 		return percent;
 	}
@@ -171,6 +171,10 @@ public class BaseController {
 	
 	public boolean inMockDraftMode(Drafter drafter) {
 		return (mockDraftMode && !drafter.getName().equals("Nick J"));
+	}
+	
+	public static List<Player> getAllPlayers() {
+		return new ArrayList<Player>(NFL.getPlayerMap().values());
 	}
 	
 }
