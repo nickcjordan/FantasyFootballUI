@@ -112,8 +112,14 @@ public class BaseController {
 		if (pickNumber == 1) {
 			return 0;
 		}
-		percent = (((pickNumber - 1) / (NUMBER_OF_ROUNDS * draft.getDrafters().size())) * 100);
+//		percent = (((pickNumber - 1) / (NUMBER_OF_ROUNDS * draft.getDrafters().size())) * 100);
+		double x = (NUMBER_OF_ROUNDS * draft.getDrafters().size());
+		double y = ((pickNumber - 1) / x);
+		double perc = (y * 100);
 		percent = (double)Math.round(percent * 100d) / 100d;
+		if (percent < 1) {
+			return 1;
+		}
 		return percent;
 	}
 	

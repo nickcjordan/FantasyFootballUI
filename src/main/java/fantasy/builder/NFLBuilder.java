@@ -104,6 +104,10 @@ public class NFLBuilder {
 		int id = 1;
 		for (List<String> split : dataReader.getSplitLinesFromFile(NFL_TEAM_NAMES_PATH, true, ",")) {
 			Team team = TeamBuilder.buildTeamFromInput(id++, split);
+//			if (team.getAbbrev().equals("FA")) {
+//				System.out.println();
+//			}
+			teams.put(team.getName(), team);
 			teams.put(team.getAbbrev(), team);
 			teamsById.put(team.getId(), team);
 		}

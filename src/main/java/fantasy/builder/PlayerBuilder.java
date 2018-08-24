@@ -64,7 +64,7 @@ public class PlayerBuilder {
 		while (i < words.length) {
 			StringBuilder line = new StringBuilder();
 			while (line.length() < 100 && i < words.length) {
-				line.append(" " + words [i++]);
+				line.append(" " + words[i++]);
 			}
 			paragraph.append(line.toString() + "\n");
 		}
@@ -80,6 +80,7 @@ public class PlayerBuilder {
 			tags.add(Tag.getIconClassFromTag(newTags.charAt(i)));
 		}
 		player.setIcons(tags);
+		System.out.println();
 	}
 
 	public static void addOLineRankings(List<String> split) {

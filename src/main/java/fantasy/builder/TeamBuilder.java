@@ -34,6 +34,7 @@ public class TeamBuilder {
 	}
 	
 	public static String getTeamNameByMascot(String mascot) {
+		String s = mascotToTeamNameMapping.get(mascot);
 		return mascotToTeamNameMapping.get(mascot);
 	}
 	

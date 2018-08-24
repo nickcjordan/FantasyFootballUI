@@ -22,22 +22,31 @@ import fantasy.model.Team;
 public class HTMLParser {
 
 	public void addNotesFromHtml() {
+		Element errorElement = null;
 		UserAgent u = new UserAgent();
 		try {
 			u.open(new File(PLAYER_NOTES_HTML_PATH));
 			Element notesWrapper = u.doc.findFirst("<div id=\"notes-wrapper\">");
 			for (Element textElement : notesWrapper.findEvery("<td class=\"text\">")) {
+				errorElement = textElement;
 				String name = textElement.findFirst("<span class=\"title\">").findFirst("<a href>").getText();
+				System.out.println("adding notes for: " + name);
 				name = name.replaceAll("\\r\\n\\t\\t\\t\\t\\t\\t\\t\\t", " ");
 				Player p = null;
 				try {
 					p = NFL.getPlayer(name);
 				} catch (Exception e) {
-					String mascot = name.split(" ")[1];
+					String[] tName = name.split(" ");
+					String mascot = tName[tName.length - 1];
 					try {
+						String shorty = TeamBuilder.getTeamNameByMascot(mascot);
+						if (shorty == null) { // empty line
+							continue;
+						}
 						p = NFL.getPlayer(TeamBuilder.getTeamNameByMascot(mascot));
 					} catch (Exception ex) {
-						
+						System.out.println();
+						ex.printStackTrace();
 					}
 				}
 				String notes = textElement.findFirst("<div class=\"player-note\">").getText();
@@ -85,7 +94,19 @@ public class HTMLParser {
 						} 
 						if (iter.hasNext()) { 
 							Element namesElement = iter.next();
-							p.setPlayerName(namesElement.findFirst("<span class=\"full-name\">").getText()); 
+							String pName = namesElement.findFirst("<span class=\"full-name\">").getText();
+							if (pName.contains("(")) {
+								if (pName.contains("Angeles")) {
+									System.out.println();
+								}
+								String[] split = pName.split(" ");
+								pName = split[split.length - 1];
+								pName = pName.replace("(", "");
+								pName = pName.replace(")", "");
+								
+								System.out.println();
+							}
+							p.setPlayerName(pName); 
 							name = p.getPlayerName();
 							try {
 								p.setTeamName(namesElement.findFirst("<a href=\"/nfl/players/free-agents.php\">").getText());
