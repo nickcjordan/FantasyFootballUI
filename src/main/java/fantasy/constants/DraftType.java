@@ -28,81 +28,21 @@ public enum DraftType {
 	}
 
 	private String[] getMock() {
-		return new String[]{
-				"Chris T",
-				"Chris R",
-				"Will",
-				"Matt",
-				"Nick J",
-				"Ryan",
-				"Josh",
-				"Mason",
-				"Nick W",
-				"Austin",
-				"Dan",
-				"Scott"
-		};
-	}
+//		return FALIFA_LEAGUE;
+//		return NEELY_LEAGUE;
+		return WHOLE_FAMILY_LEAGUE;	
+		}
 		
 	private String[] getAuto() {
-		return new String[]{
-				"Chris T",
-				"Chris R",
-				"Will",
-				"Matt",
-				"Nick J",
-				"Ryan",
-				"Josh",
-				"Mason",
-				"Nick W",
-				"Austin",
-				"Dan",
-				"Scott"
-		};
-	}
+//		return FALIFA_LEAGUE;
+//		return NEELY_LEAGUE;
+		return WHOLE_FAMILY_LEAGUE;	
+		}
 	
 	private String[] realOrder() {
-		return new String[]{
-//				"Brittany",
-//				"Diane",
-//				"Mom",
-//				"Heather",
-//				"Dianes Dad",
-//				"Dad",
-//				"Nick J", 
-//				"Michael",
-//				"Chris",
-//				"Claire"
-				
-				"Chris T",
-				"Chris R",
-				"Will",
-				"Matt",
-				"Nick J",
-				"Ryan",
-				"Josh",
-				"Mason",
-				"Nick W",
-				"Austin",
-				"Dan",
-				"Scott"
-		};
-
-//	private String[] realOrder() {
-//		return new String[]{
-//				"Mason",
-//				"Scott",
-//				"Nick J",
-//				"Austin",
-//				"Nick W",
-//				"Chris R",
-//				"Will",
-//				"Dan",
-//				"Matt",
-//				"Josh",
-//				"Chris T",
-//				"Ryan"
-//		};
+//		return FALIFA_LEAGUE;			
+//		return NEELY_LEAGUE;
+		return WHOLE_FAMILY_LEAGUE;
 	}
 
 	public String[] getOrder() {
@@ -134,4 +74,46 @@ public enum DraftType {
 		return null;
 	}
 	
+	private String[] FALIFA_LEAGUE = new String[]{
+			"Chris T",
+			"Chris R",
+			"Will",
+			"Matt",
+			"Nick J",
+			"Ryan",
+			"Josh",
+			"Mason",
+			"Nick W",
+			"Austin",
+			"Dan",
+			"Scott"
+	};
+	
+	private String[] NEELY_LEAGUE = new String[]{
+			"Dad",
+			"Brian",
+			"Chris",
+			"Tyler",
+			"Nick J",
+			"Dan F",
+			"Dan M",
+			"Jay",
+	};
+	
+	private String[] WHOLE_FAMILY_LEAGUE = new String[]{
+			"Brittany",
+			"Diane",
+			"Mom",
+			"Heather",
+			"Dianes Dad",
+			"Dad",
+			"Nick J", 
+			"Michael",
+			"Chris",
+			"Claire",
+			"Nicole",
+			"Katie",
+			"Brittany's Boyfriend",
+			"Jason"
+	};
 }

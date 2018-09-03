@@ -1,3 +1,5 @@
+UPGRADES::
+========
 
 BIG:
 -----
@@ -25,8 +27,11 @@ Small:
 
 -add option to pick number of rounds on start page
 
+-REFACTOR HtmlParser class
 
 
-IMPORTANT:
+
+BUG FIXES::
 ========
--make sure things work with 18
+-Fix tag manipulated suggestion list to properly weight the ordering... something weird is happening
+-percent bar not working
